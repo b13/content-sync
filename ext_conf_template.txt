@@ -1,0 +1,28 @@
+configuration {
+    # cat=configuration; type=string; label=CSV of Database Tables to sync (Wildcards e.g. "cf_*" also supported)
+    databaseTables = pages,tt_content
+    # cat=configuration; type=string; label=CSV of Database Tables to exlude (if databaseTables if empty) (Wildcards e.g. "cf_*" also supported)
+    excludeDatabaseTables =
+    # cat=configuration; type=string; label=CSV of files/folders to sync
+    syncFiles = public/fileadmin/user_upload
+}
+sourceNode {
+    # cat=sourceNode; type=boolean; label=Is this a local Node
+    local = 1
+    # cat=sourceNode; type=string; label=Connection for Remote Node (<user>@<host>)
+    connection =
+    # cat=sourceNode; type=string; label=Full Path to TYPO3 console bin (e.g. /var/www/html/bin/typo3cms)
+    bin =
+    # cat=sourceNode; type=string; label=Base Path for sync
+    basePath =
+}
+targetNode {
+    # cat=targetNode; type=boolean; label=Is this a local Node
+    local = 0
+    # cat=targetNode; type=string; label=Connection for Remote Node (<user>@<host>)
+    connection =
+    # cat=targetNode; type=string; label=Full Path to TYPO3 console bin (e.g. /var/www/html/bin/typo3cms)
+    bin =
+    # cat=targetNode; type=string; label=Base Path for sync
+    basePath =
+}

@@ -1,0 +1,53 @@
+<html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{job}">
+    <f:then>
+        <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job-status"/>:
+        <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job-status.{job.status}"/>
+        <br>
+        <small class="text-muted">
+            {job.configuration.sourceNode.connection} -&gt; {job.configuration.targetNode.connection}
+            <br>
+            <f:switch expression="{job.status}">
+                <f:case value="0">
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.created-at" />:
+                    <f:format.date format="{f:translate(key: 'LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.date-format')}">{job.createdTime}</f:format.date>
+                </f:case>
+                <f:case value="1">
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.running-since" />:
+                    <f:format.date format="{f:translate(key: 'LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.date-format')}">{job.startTime}</f:format.date>
+                    <br>
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.execution-time" />:
+                    {job.executionTime}
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.seconds" />
+                </f:case>
+                <f:defaultCase>
+                    <f:comment>2,3,4</f:comment>
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.finished-at" />:
+                    <f:format.date format="{f:translate(key: 'LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.date-format')}">{job.endTime}</f:format.date>
+                    <br>
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.execution-time" />:
+                    {job.executionTime}
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.seconds" />
+                </f:defaultCase>
+            </f:switch>
+        </small>
+        <f:if condition="{job.error}">
+            <br>
+            <small class="text-danger">
+                {job.error}
+            </small>
+        </f:if>
+        <f:if condition="{job.killable}">
+            <form method="post" class="t3js-content-sync-kill">
+                <button type="submit" class="btn btn-danger">
+                    <core:icon identifier="actions-delete" size="small" />
+                    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.kill" />
+                </button>
+            </form>
+        </f:if>
+    </f:then>
+    <f:else>
+        <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.no-jobs" />
+    </f:else>
+</f:if>
+</html>

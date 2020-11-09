@@ -1,0 +1,14 @@
+stages:
+  - code-analysis
+
+include:
+  - project: "infrastructure/gitlab-ci"
+    file: "/src/code-analysis-bootstrap.yml"
+
+code-analysis:
+  extends: .code-analysis_bootstrap
+  before_script:
+    - composer install --ignore-platform-reqs --no-scripts
+  script:
+    - php -d memory_limit=2G ./vendor/bin/phpstan analyse -c Resources/Private/Configuration/phpstan.neon
+    - php -d memory_limit=2G ./vendor/bin/php-cs-fixer fix --config=vendor/typo3/coding-standards/templates/extension_php_cs.dist --dry-run --stop-on-violation --using-cache=no Classes

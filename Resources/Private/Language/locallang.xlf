@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file t3:id="1600777531" source-language="en" datatype="plaintext" date="2020-09-22T11:16:11Z" product-name="content-sync">
+        <header/>
+        <body>
+            <trans-unit id="statusReport.headline">
+                <source>Content Sync</source>
+            </trans-unit>
+            <trans-unit id="statusReport.date-format">
+                <source>m/d/Y h:i:s</source>
+            </trans-unit>
+            <trans-unit id="statusReport.seconds">
+                <source>Seconds</source>
+            </trans-unit>
+            <trans-unit id="statusReport.no-jobs">
+                <source>No Sync Jobs created yet</source>
+            </trans-unit>
+            <trans-unit id="statusReport.new-job">
+                <source>Create New Job</source>
+            </trans-unit>
+            <trans-unit id="statusReport.invalid-configuration">
+                <source>Invalid Configuration</source>
+            </trans-unit>
+            <trans-unit id="statusReport.current-configuration">
+                <source>Current Extension-Configuration</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job.kill">
+                <source>Kill Job</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job.created-at">
+                <source>Created at</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job.running-since">
+                <source>Running since</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job.finished-at">
+                <source>Finished at</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job.execution-time">
+                <source>Execution Time</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job-status">
+                <source>Job Status</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job-status.0">
+                <source>Waiting</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job-status.1">
+                <source>Running</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job-status.2">
+                <source>Finished</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job-status.3">
+                <source>Killed</source>
+            </trans-unit>
+            <trans-unit id="statusReport.job-status.4">
+                <source>Failed</source>
+            </trans-unit>
+            <trans-unit id="flashMessage.job-created">
+                <source>New Job Created</source>
+            </trans-unit>
+            <trans-unit id="flashMessage.job-killed">
+                <source>Job killed</source>
+            </trans-unit>
+            <trans-unit id="flashMessage.job-not-created">
+                <source>Cannot create New Job</source>
+            </trans-unit>
+            <trans-unit id="flashMessage.job-not-killed">
+                <source>Cannot kill Job</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

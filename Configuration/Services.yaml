@@ -1,0 +1,32 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  B13\ContentSync\:
+    resource: '../Classes/*'
+
+  B13\ContentSync\Backend\ToolbarItems\JobStatusToolbarItem:
+    public: true
+
+  B13\ContentSync\Command\StatusReportCommand:
+    tags:
+      - name: 'console.command'
+        command: 'content-sync:status-report'
+        schedulable: true
+  B13\ContentSync\Command\RunnerCommand:
+    tags:
+      - name: 'console.command'
+        command: 'content-sync:runner'
+        schedulable: true
+  B13\ContentSync\Command\JobCreatorCommand:
+    tags:
+      - name: 'console.command'
+        command: 'content-sync:job:create'
+        schedulable: true
+  B13\ContentSync\Command\JobKillerCommand:
+    tags:
+      - name: 'console.command'
+        command: 'content-sync:job:kill'
+        schedulable: true

@@ -1,0 +1,33 @@
+{
+  "name": "b13/content-sync",
+  "type": "typo3-cms-extension",
+  "description": "Sync Database Tables and Files between two TYPO3 Installations",
+  "homepage": "https://b13.com",
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "require": {
+    "typo3/cms-backend": "^10.4.8",
+    "typo3/cms-fluid": "^10.4.8",
+    "helhum/typo3-console": "^6.0.0",
+    "zumba/json-serializer": "^2.2",
+    "symfony/process": "^4.4 || ^5.0"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "content_sync"
+    }
+  },
+  "replace": {
+    "typo3-ter/content-sync": "self.version"
+  },
+  "autoload": {
+    "psr-4": {
+      "B13\\ContentSync\\": "Classes/"
+    }
+  },
+  "require-dev": {
+    "typo3/coding-standards": "^0.2.0",
+    "phpstan/phpstan": "^0.12.43"
+  }
+}
