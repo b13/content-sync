@@ -2,9 +2,9 @@
 
 Sync Database Tables and Files between two TYPO3 Installations
 
-## Requiremnts
+## Requirements
 
-* MySQL is used as DBMS and the mysqldump and mysql binaries  must be available in the Path
+* MySQL is used as DBMS, and the mysqldump and mysql binaries must be available in the Path
 * SSH-Connection to Remote Node by Key Authentication
 * typo3-console on target and source node must be available
 
