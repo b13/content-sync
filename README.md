@@ -1,12 +1,16 @@
-# EXT:content_sync
+# TYPO3 Extension "content_sync"
 
-Sync Database Tables and Files between two TYPO3 Installations
+This extension syncs raw database tables and selected files of directories between two TYPO3 installations.
 
-## Requiremnts
+This can be used to sync between a "content master" system, where editors work, and a "production" system which does not have a TYPO3 backend available. Both systems are connected via SSH.
 
-* MySQL is used as DBMS and the mysqldump and mysql binaries  must be available in the Path
-* SSH-Connection to Remote Node by Key Authentication
-* typo3-console on target and source node must be available
+This extension is - by design - very simplistic, and for other use-cases we recommend using Workspaces for publishing processes or in2publish as a more sophisticated solution.
+
+## Requirements
+
+* MySQL is used as RDBMS and the mysqldump and mysql binaries must be available in the $PATH for PHP
+* A SSH Connection to Remote Node by Key Authentication (can be configured via .ssh/config)
+* helhum/typo3_console on target and source node must be available
 
 ## Extension Configuration
 
@@ -15,12 +19,12 @@ Sync Database Tables and Files between two TYPO3 Installations
 
 ## Backend Access
 
-is granted to Admin Users and to Users with UserTS
+In order to see and kickstart a content sync, a new toolbar item on top is shown. Access is granted to Admin Users and to non-administrators with UserTSconfig:
 
-    options.enableContentSync=1
+    options.enableContentSync = 1
 
 
-## Commands
+## Available TYPO3 CLI Commands
 
     content-sync:job:create
     
@@ -28,10 +32,17 @@ creates a new Job from Extension-Configuration
 
     content-sync:runner
     
-runs one waiting Job
+runs one waiting job.
 
-### Code Analyses
+Ensure to have your scheduler set up.
+
+### Code Analysis
 
 - run `composer install`
 - run ``vendor/bin/phpstan analyse -c Resources/Private/Configuration/phpstan.neon``
 - run ``vendor/bin/php-cs-fixer fix --config=vendor/typo3/coding-standards/templates/extension_php_cs.dist --dry-run --stop-on-violation --using-cache=no Classes``
+
+
+## License
+
+As TYPO3 Core, _content_sync_ is licensed under GPL2 or later.
