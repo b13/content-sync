@@ -34,12 +34,13 @@ class ProcessRunner implements SingletonInterface
         $remoteNode = $configuration->getTargetNode();
         $localNode = $configuration->getSourceNode();
         $tmpFileName = tempnam('/tmp', 'content-sync-dbdump');
+        $tmpFileNameRemote = 'content-sync-dbdump' . time();
         $commands = [
             $localNode->getBin() . ' database:export ' . $this->databaseParameterBuilder->buildTablesExclude($configuration) . ' | gzip > ' . $tmpFileName,
-            'scp ' . $tmpFileName . ' ' . $remoteNode->getConnection() . ':' . $tmpFileName,
-            'ssh ' . $remoteNode->getConnection() . ' "zcat ' . $tmpFileName . '|' . $remoteNode->getBin() . ' database:import"',
+            'scp ' . $tmpFileName . ' ' . $remoteNode->getConnection() . ':' . $tmpFileNameRemote,
+            'ssh ' . $remoteNode->getConnection() . ' "zcat ' . $tmpFileNameRemote . '|' . $remoteNode->getBin() . ' database:import"',
             'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' cache:flushgroups pages"',
-            'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileName . '"',
+            'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileNameRemote . '"',
             'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi'
         ];
         foreach ($configuration->getSyncFiles() as $file) {
@@ -56,12 +57,13 @@ class ProcessRunner implements SingletonInterface
         $remoteNode = $configuration->getSourceNode();
         $localNode = $configuration->getTargetNode();
         $tmpFileName = tempnam('/tmp', 'content-sync-dbdump');
+        $tmpFileNameRemote = 'content-sync-dbdump' . time();
         $commands = [
-            'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' database:export ' . $this->databaseParameterBuilder->buildTablesExclude($configuration) . ' | gzip > ' . $tmpFileName . '"',
-            'scp ' . $remoteNode->getConnection() . ':' . $tmpFileName . ' ' . $tmpFileName,
+            'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' database:export ' . $this->databaseParameterBuilder->buildTablesExclude($configuration) . ' | gzip > ' . $tmpFileNameRemote . '"',
+            'scp ' . $remoteNode->getConnection() . ':' . $tmpFileNameRemote . ' ' . $tmpFileName,
             'zcat ' . $tmpFileName . ' | ' . $localNode->getBin() . ' database:import',
             $localNode->getBin() . ' cache:flushgroups pages',
-            'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileName . '"',
+            'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileNameRemote . '"',
             'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi'
         ];
         foreach ($configuration->getSyncFiles() as $file) {
