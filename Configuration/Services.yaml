@@ -30,3 +30,8 @@ services:
       - name: 'console.command'
         command: 'content-sync:job:kill'
         schedulable: true
+  B13\ContentSync\Command\CollectGarbageCommand:
+    tags:
+      - name: 'console.command'
+        command: 'content-sync:collect-garbage'
+        schedulable: true

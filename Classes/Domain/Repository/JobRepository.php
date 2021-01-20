@@ -97,4 +97,28 @@ class JobRepository implements SingletonInterface
         }
         return (new Job())->fromDatabaseRow($row);
     }
+
+    public function findStaleJobs(): array
+    {
+        $queryBuilder = $this->databaseConnection->createQueryBuilder();
+        $timeLimit = (new \DateTime('-' . Job::KILLABLE_TIMELIMIT . ' seconds'))->getTimestamp();
+        $res = $queryBuilder
+            ->select('*')
+            ->from(self::TABLE)
+            ->where(
+                $queryBuilder->expr()->lte(
+                    'created_time', $queryBuilder->createNamedParameter($timeLimit, \PDO::PARAM_INT)
+                ),
+                $queryBuilder->expr()->in(
+                    'status', $queryBuilder->createNamedParameter([Job::STATUS_WATING, Job::STATUS_RUNNING], Connection::PARAM_INT_ARRAY)
+                )
+            )
+            ->execute();
+
+        $jobs = [];
+        while ($row = $res->fetch()) {
+            $jobs[] = (new Job())->fromDatabaseRow($row);
+        }
+        return $jobs;
+    }
 }
