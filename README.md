@@ -34,6 +34,10 @@ creates a new Job from Extension-Configuration
     
 runs one waiting job.
 
+    content-sync:collect-garbage
+
+checks for any outdated jobs that are still running or waiting due to an error and removes them from the queue.
+
 Ensure to have your scheduler set up.
 
 ### Code Analysis
