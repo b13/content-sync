@@ -101,7 +101,7 @@ class JobRepository implements SingletonInterface
     public function findStaleJobs(): array
     {
         $queryBuilder = $this->databaseConnection->createQueryBuilder();
-        $timeLimit = (new \DateTime('-10 minutes'))->getTimestamp();
+        $timeLimit = (new \DateTime('-' . Job::KILLABLE_TIMELIMIT . ' seconds'))->getTimestamp();
         $res = $queryBuilder
             ->select('*')
             ->from(self::TABLE)
