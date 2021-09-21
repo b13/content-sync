@@ -7,9 +7,9 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-backend": "^10.4.8",
-    "typo3/cms-fluid": "^10.4.8",
-    "helhum/typo3-console": "^6.0.0",
+    "typo3/cms-backend": "^10.4.8 || ^11.4",
+    "typo3/cms-fluid": "^10.4.8 || ^11.4",
+    "helhum/typo3-console": "^6.0.0 || ^7.0.0",
     "zumba/json-serializer": "^2.2",
     "symfony/process": "^4.4 || ^5.0"
   },
