@@ -107,10 +107,12 @@ class JobRepository implements SingletonInterface
             ->from(self::TABLE)
             ->where(
                 $queryBuilder->expr()->lte(
-                    'created_time', $queryBuilder->createNamedParameter($timeLimit, \PDO::PARAM_INT)
+                    'created_time',
+                    $queryBuilder->createNamedParameter($timeLimit, \PDO::PARAM_INT)
                 ),
                 $queryBuilder->expr()->in(
-                    'status', $queryBuilder->createNamedParameter([Job::STATUS_WATING, Job::STATUS_RUNNING], Connection::PARAM_INT_ARRAY)
+                    'status',
+                    $queryBuilder->createNamedParameter([Job::STATUS_WATING, Job::STATUS_RUNNING], Connection::PARAM_INT_ARRAY)
                 )
             )
             ->execute();
