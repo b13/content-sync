@@ -90,8 +90,7 @@ class ProcessRunner implements SingletonInterface
     {
         if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
             return 'cache:flushgroups pages';
-        } else {
-            return 'cache:flushtags pages';
         }
+        return 'cache:flushtags pages';
     }
 }
