@@ -75,6 +75,7 @@ class RunnerCommand extends Command
             } else {
                 $this->processRunner->remoteToLocal($configuration);
             }
+            // @extensionScannerIgnoreLine
             $job->finish();
             $this->jobRepository->updateJob($job);
             return 0;
