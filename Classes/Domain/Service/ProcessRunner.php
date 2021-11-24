@@ -15,7 +15,9 @@ namespace B13\ContentSync\Domain\Service;
 use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Exception;
 use Symfony\Component\Process\Process;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ProcessRunner implements SingletonInterface
 {
@@ -39,7 +41,7 @@ class ProcessRunner implements SingletonInterface
             $localNode->getBin() . ' database:export ' . $this->databaseParameterBuilder->buildTablesExclude($configuration) . ' | gzip > ' . $tmpFileName,
             'scp ' . $tmpFileName . ' ' . $remoteNode->getConnection() . ':' . $tmpFileNameRemote,
             'ssh ' . $remoteNode->getConnection() . ' "zcat ' . $tmpFileNameRemote . '|' . $remoteNode->getBin() . ' database:import"',
-            'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' cache:flushgroups pages"',
+            'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' ' . $this->getFlushPageCacheArguments() . '"',
             'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileNameRemote . '"',
             'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi'
         ];
@@ -62,7 +64,7 @@ class ProcessRunner implements SingletonInterface
             'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' database:export ' . $this->databaseParameterBuilder->buildTablesExclude($configuration) . ' | gzip > ' . $tmpFileNameRemote . '"',
             'scp ' . $remoteNode->getConnection() . ':' . $tmpFileNameRemote . ' ' . $tmpFileName,
             'zcat ' . $tmpFileName . ' | ' . $localNode->getBin() . ' database:import',
-            $localNode->getBin() . ' cache:flushgroups pages',
+            $localNode->getBin() . ' ' . $this->getFlushPageCacheArguments(),
             'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileNameRemote . '"',
             'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi'
         ];
@@ -82,5 +84,13 @@ class ProcessRunner implements SingletonInterface
         if (!$process->isSuccessful()) {
             throw new Exception('cannot exec command ' . $cmd . ' with error ' . $process->getErrorOutput(), 1600757440);
         }
+    }
+
+    protected function getFlushPageCacheArguments(): string
+    {
+        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
+            return 'cache:flushgroups pages';
+        }
+        return 'cache:flushtags pages';
     }
 }
