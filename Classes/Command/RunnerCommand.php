@@ -22,20 +22,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunnerCommand extends Command
 {
-    /**
-     * @var ProcessRunner
-     */
-    protected $processRunner;
-
-    /**
-     * @var JobRepository
-     */
-    protected $jobRepository;
-
-    /**
-     * @var ConfigurationValidator
-     */
-    protected $validator;
+    protected ProcessRunner $processRunner;
+    protected JobRepository $jobRepository;
+    protected ConfigurationValidator $validator;
 
     public function __construct(
         ProcessRunner $processRunner,

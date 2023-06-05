@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Definitions for routes provided by EXT:l10n_translator
+ * Definitions for routes provided by EXT:content_sync
  */
 return [
     'content-sync_create' => [

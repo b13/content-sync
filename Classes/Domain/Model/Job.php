@@ -25,44 +25,19 @@ class Job
     // can be killed after 10m running
     const KILLABLE_TIMELIMIT = 600;
 
-    /**
-     * @var int
-     */
     protected $status = self::STATUS_WATING;
-
-    /**
-     * @var Configuration
-     */
-    protected $configuration;
-
-    /**
-     * @var \DateTime
-     */
-    protected $startTime;
-
-    /**
-     * @var \DateTime
-     */
-    protected $endTime;
-
-    /**
-     * @var \DateTime
-     */
-    protected $createdTime;
-
-    /**
-     * @var string
-     */
-    protected $error = '';
-
-    /**
-     * @var int
-     */
-    protected $uid;
+    protected Configuration $configuration;
+    protected \DateTime $startTime;
+    protected \DateTime $endTime;
+    protected \DateTime $createdTime;
+    protected string $error = '';
+    protected int $uid;
 
     public function __construct()
     {
         $this->createdTime = new \DateTime();
+        $this->startTime = new \DateTime();
+        $this->endTime = new \DateTime();
     }
 
     /**

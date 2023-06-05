@@ -30,7 +30,6 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class JobController implements SingletonInterface
 {
-
     protected ExtensionConfiguration $extensionConfiguration;
     protected ConfigurationValidator $validator;
     protected JobRepository $jobRepository;

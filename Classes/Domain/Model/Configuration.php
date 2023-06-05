@@ -16,21 +16,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Configuration
 {
-    protected $databaseTables = [];
-
-    protected $excludeDatabaseTables = [];
-
-    protected $syncFiles = [];
-
-    /**
-     * @var Node
-     */
-    protected $targetNode;
-
-    /**
-     * @var Node
-     */
-    protected $sourceNode;
+    protected array $databaseTables = [];
+    protected array $excludeDatabaseTables = [];
+    protected array $syncFiles = [];
+    protected Node $targetNode;
+    protected Node $sourceNode;
 
     public function fromExtensionConfiguration(array $extensionConfiguration): Configuration
     {

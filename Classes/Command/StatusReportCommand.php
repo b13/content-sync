@@ -21,10 +21,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class StatusReportCommand extends Command
 {
-    /**
-     * @var StatusReportFactory
-     */
-    protected $statusReportFactory;
+    protected StatusReportFactory $statusReportFactory;
 
     public function __construct(StatusReportFactory $statusReportFactory, string $name = null)
     {

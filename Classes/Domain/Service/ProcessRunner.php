@@ -21,10 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ProcessRunner implements SingletonInterface
 {
-    /**
-     * @var DatabaseParameterBuilder
-     */
-    protected $databaseParameterBuilder;
+    protected DatabaseParameterBuilder $databaseParameterBuilder;
 
     public function __construct(DatabaseParameterBuilder $databaseParameterBuilder)
     {

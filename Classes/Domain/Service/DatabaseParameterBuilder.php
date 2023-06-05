@@ -21,11 +21,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 class DatabaseParameterBuilder implements SingletonInterface
 {
     private const DATABASE_CONNECTION_NAME = 'Default';
-
-    /**
-     * @var Connection
-     */
-    protected $connection;
+    protected Connection $connection;
 
     public function __construct(ConnectionPool $connectionPool)
     {
