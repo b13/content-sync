@@ -14,4 +14,3 @@ return [
         'source' => 'EXT:content_sync/Resources/Public/Icons/SynchronisationHistory.svg',
     ],
 ];
-

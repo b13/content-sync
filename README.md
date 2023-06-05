@@ -42,9 +42,9 @@ Ensure to have your scheduler set up.
 
 ### Code Analysis
 
-- run `composer install`
-- run ``vendor/bin/phpstan analyse -c Resources/Private/Configuration/phpstan.neon``
-- run ``vendor/bin/php-cs-fixer fix --config=vendor/typo3/coding-standards/templates/extension_php_cs.dist --dry-run --stop-on-violation --using-cache=no Classes``
+- run `./Build/Scripts/runTests.sh -p 8.1 -s composerUpdate`
+- run `./Build/Scripts/runTests.sh -p 8.1 -t 12 -s phpstan`
+- run `./Build/Scripts/runTests.sh -p 8.1 -t 12 -s cgl`
 
 
 ## License

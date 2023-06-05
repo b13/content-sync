@@ -32,7 +32,7 @@ class JobStatusToolbarItem implements ToolbarItemInterface
 
     public function checkAccess(): bool
     {
-        return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin() ?? false);
+        return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin());
     }
 
     public function getItem(): string
