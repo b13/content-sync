@@ -14,13 +14,10 @@ namespace B13\ContentSync\Domain\Model;
 
 class Node
 {
-    protected $local = false;
-
-    protected $connection = '';
-
-    protected $basePath = '';
-
-    protected $bin = '';
+    protected bool $local = false;
+    protected string $connection = '';
+    protected string $basePath = '';
+    protected string $bin = '';
 
     public function fromArray(array $properties): Node
     {

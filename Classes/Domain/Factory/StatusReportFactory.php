@@ -22,21 +22,9 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class StatusReportFactory implements SingletonInterface
 {
-
-    /**
-     * @var JobRepository
-     */
-    protected $jobRepository;
-
-    /**
-     * @var ConfigurationValidator
-     */
-    protected $configurationValidator;
-
-    /**
-     * @var ExtensionConfiguration
-     */
-    protected $extensionConfiguration;
+    protected JobRepository $jobRepository;
+    protected ConfigurationValidator $configurationValidator;
+    protected ExtensionConfiguration $extensionConfiguration;
 
     public function __construct(
         ConfigurationValidator $configurationValidator,

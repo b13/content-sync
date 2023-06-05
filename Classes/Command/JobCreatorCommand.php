@@ -23,20 +23,9 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class JobCreatorCommand extends Command
 {
-    /**
-     * @var ExtensionConfiguration
-     */
-    protected $extensionConfiguration;
-
-    /**
-     * @var ConfigurationValidator
-     */
-    protected $validator;
-
-    /**
-     * @var JobRepository
-     */
-    protected $jobRepository;
+    protected ExtensionConfiguration $extensionConfiguration;
+    protected ConfigurationValidator $validator;
+    protected JobRepository $jobRepository;
 
     public function __construct(
         ExtensionConfiguration $extensionConfiguration,

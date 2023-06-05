@@ -19,10 +19,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CollectGarbageCommand extends Command
 {
-    /**
-     * @var JobRepository
-     */
-    protected $jobRepository;
+    protected JobRepository $jobRepository;
 
     public function __construct(
         JobRepository $jobRepository,

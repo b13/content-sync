@@ -14,25 +14,10 @@ namespace B13\ContentSync\Domain\Model;
 
 class StatusReport
 {
-    /**
-     * @var Job
-     */
-    protected $job;
-
-    /**
-     * @var Configuration
-     */
-    protected $configuration;
-
-    /**
-     * @var bool
-     */
-    protected $configurationIsValid = false;
-
-    /**
-     * @var string
-     */
-    protected $configurationError = '';
+    protected ?Job $job;
+    protected Configuration $configuration;
+    protected bool $configurationIsValid = false;
+    protected string $configurationError = '';
 
     public function fromArray(array $properties): StatusReport
     {

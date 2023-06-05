@@ -15,16 +15,14 @@ namespace B13\ContentSync\Backend\ToolbarItems;
 use B13\ContentSync\Domain\Factory\StatusReportFactory;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class JobStatusToolbarItem implements ToolbarItemInterface
 {
-    /**
-     * @var StatusReportFactory
-     */
-    protected $statusReportFactory;
+    protected StatusReportFactory $statusReportFactory;
 
     public function __construct(StatusReportFactory $statusReportFactory, PageRenderer $pageRenderer)
     {
@@ -34,7 +32,7 @@ class JobStatusToolbarItem implements ToolbarItemInterface
 
     public function checkAccess(): bool
     {
-        return (bool)$this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] || (bool)$this->getBackendUser()->isAdmin();
+        return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin() ?? false);
     }
 
     public function getItem(): string
@@ -76,11 +74,17 @@ class JobStatusToolbarItem implements ToolbarItemInterface
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setLayoutRootPaths(['EXT:backend/Resources/Private/Layouts']);
         $view->setPartialRootPaths(['EXT:backend/Resources/Private/Partials/ToolbarItems', 'EXT:content_sync/Resources/Private/Partials']);
-        $view->setTemplateRootPaths(['EXT:content_sync/Resources/Private/Templates/ToolbarItems']);
 
+        $templateRootPaths = ['EXT:content_sync/Resources/Private/Templates/ToolbarItems'];
+        // @todo: remove when v11 was dropped
+        if ((new Typo3Version())->getMajorVersion() < 12) {
+            $templateRootPaths = ['EXT:content_sync/Resources/Private/Templates/ToolbarItemsV11'];
+            $view->getRequest()->setControllerExtensionName('ContentSync');
+        }
+
+        $view->setTemplateRootPaths($templateRootPaths);
         $view->setTemplate($filename);
 
-        $view->getRequest()->setControllerExtensionName('ContentSync');
         return $view;
     }
 

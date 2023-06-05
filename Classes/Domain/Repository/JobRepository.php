@@ -21,10 +21,7 @@ class JobRepository implements SingletonInterface
 {
     const TABLE = 'tx_contentsync_job';
 
-    /**
-     * @var Connection
-     */
-    protected $databaseConnection;
+    protected Connection $databaseConnection;
 
     public function __construct(ConnectionPool $connectionPool)
     {
