@@ -2,12 +2,14 @@
 <h3 class="dropdown-headline">
     <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.headline" />
 </h3>
-<div class="">
-    <div class="dropdown-item-columns dropdown-item-text">
-        <div class="dropdown-item-column dropdown-item-icon">
+<hr>
+<div class="dropdown-table">
+
+    <div class="dropdown-table-row">
+        <div class="dropdown-table-column dropdown-table-column-top dropdown-table-icon">
             <core:icon identifier="b13-content-sync-configuration" size="small" />
         </div>
-        <div class="dropdown-item-column">
+        <div class="dropdown-table-column dropdown-table-column-top dropdown-table-text">
             <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.current-configuration" />
             <f:if condition="{statusReport.configurationIsValid}">
                 <f:then>
@@ -27,11 +29,12 @@
         </div>
     </div>
 
-    <div class="dropdown-item-columns dropdown-item-text">
-            <div class="dropdown-item-column dropdown-item-column-icon">
+    <div class="dropdown-table-row">
+
+            <div class="dropdown-table-column dropdown-table-column-top dropdown-table-icon">
                 <core:icon identifier="b13-content-sync-status" size="small" />
             </div>
-            <div class="dropdown-item-column t3js-content-sync-current-job">
+            <div class="dropdown-table-column dropdown-table-column-top dropdown-table-text t3js-content-sync-current-job">
                 <f:render partial="ToolbarItems/Job" arguments="{job: statusReport.job}" />
                 <f:if condition="{statusReport.newJobCreateable}">
                     <f:render partial="ToolbarItems/NewJob" />

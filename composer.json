@@ -7,11 +7,11 @@
     "GPL-2.0-or-later"
   ],
   "require": {
-    "typo3/cms-backend": "^10.4.8 || ^11.4",
-    "typo3/cms-fluid": "^10.4.8 || ^11.4",
-    "helhum/typo3-console": "^6.0.0 || ^7.0.0",
-    "zumba/json-serializer": "^2.2",
-    "symfony/process": "^4.4 || ^5.0"
+    "typo3/cms-backend": "^11.4 || ^12.4",
+    "typo3/cms-fluid": "^11.4 || ^12.4",
+    "helhum/typo3-console": "^7.0.0 || ^8.0",
+    "zumba/json-serializer": "^3.0",
+    "symfony/process": "^5.0 || ^6.0"
   },
   "extra": {
     "typo3/cms": {

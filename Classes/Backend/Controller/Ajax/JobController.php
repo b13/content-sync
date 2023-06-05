@@ -31,20 +31,9 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class JobController implements SingletonInterface
 {
 
-    /**
-     * @var ExtensionConfiguration
-     */
-    protected $extensionConfiguration;
-
-    /**
-     * @var ConfigurationValidator
-     */
-    protected $validator;
-
-    /**
-     * @var JobRepository
-     */
-    protected $jobRepository;
+    protected ExtensionConfiguration $extensionConfiguration;
+    protected ConfigurationValidator $validator;
+    protected JobRepository $jobRepository;
 
     public function __construct(
         ExtensionConfiguration $extensionConfiguration,
@@ -87,8 +76,7 @@ class JobController implements SingletonInterface
             ];
         }
 
-        $response = new JsonResponse($return);
-        return $response;
+        return new JsonResponse($return);
     }
 
     public function kill(ServerRequestInterface $request): Response
@@ -121,8 +109,7 @@ class JobController implements SingletonInterface
             ];
         }
 
-        $response = new JsonResponse($return);
-        return $response;
+        return new JsonResponse($return);
     }
 
     protected function getFluidTemplateObject(string $filename): StandaloneView
@@ -130,10 +117,8 @@ class JobController implements SingletonInterface
         $view = GeneralUtility::makeInstance(StandaloneView::class);
         $view->setPartialRootPaths(['EXT:content_sync/Resources/Private/Partials']);
         $view->setTemplateRootPaths(['EXT:content_sync/Resources/Private/Templates/Ajax/Job']);
-
         $view->setTemplate($filename);
 
-        $view->getRequest()->setControllerExtensionName('ContentSync');
         return $view;
     }
 
@@ -144,6 +129,6 @@ class JobController implements SingletonInterface
 
     protected function checkAccess(): bool
     {
-        return (bool)$this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] || (bool)$this->getBackendUser()->isAdmin();
+        return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin() ?? false);
     }
 }
