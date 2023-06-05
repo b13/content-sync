@@ -103,8 +103,8 @@ class Job
             'status' => $this->status,
             'json_configuration' => $json,
             'created_time' => $this->createdTime->format('U'),
-            'start_time' => $this->startTime === null ? 0 : $this->startTime->format('U'),
-            'end_time' => $this->endTime === null ? 0 : $this->endTime->format('U'),
+            'start_time' => $this->startTime->format('U'),
+            'end_time' => $this->endTime->format('U'),
             'error' => $this->error
         ];
     }

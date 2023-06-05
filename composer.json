@@ -27,7 +27,13 @@
     }
   },
   "require-dev": {
-    "typo3/coding-standards": "^0.2.0",
-    "phpstan/phpstan": "^0.12.43"
+    "typo3/coding-standards": "^0.7.1",
+    "phpstan/phpstan": "^1.10.16"
+  },
+  "config": {
+    "allow-plugins": {
+      "typo3/cms-composer-installers": true,
+      "typo3/class-alias-loader": true
+    }
   }
 }

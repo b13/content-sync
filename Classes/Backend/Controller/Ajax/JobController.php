@@ -128,6 +128,6 @@ class JobController implements SingletonInterface
 
     protected function checkAccess(): bool
     {
-        return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin() ?? false);
+        return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin());
     }
 }
