@@ -40,7 +40,7 @@ class ProcessRunner implements SingletonInterface
             'ssh ' . $remoteNode->getConnection() . ' "zcat ' . $tmpFileNameRemote . '|' . $remoteNode->getBin() . ' database:import"',
             'ssh ' . $remoteNode->getConnection() . ' "' . $remoteNode->getBin() . ' ' . $this->getFlushPageCacheArguments() . '"',
             'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileNameRemote . '"',
-            'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi'
+            'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi',
         ];
         foreach ($configuration->getSyncFiles() as $file) {
             $file = rtrim($file, '/');
@@ -63,7 +63,7 @@ class ProcessRunner implements SingletonInterface
             'zcat ' . $tmpFileName . ' | ' . $localNode->getBin() . ' database:import',
             $localNode->getBin() . ' ' . $this->getFlushPageCacheArguments(),
             'ssh ' . $remoteNode->getConnection() . ' "rm ' . $tmpFileNameRemote . '"',
-            'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi'
+            'if [ -e ' . $tmpFileName . ']; then rm ' . $tmpFileName . '; fi',
         ];
         foreach ($configuration->getSyncFiles() as $file) {
             $file = rtrim($file, '/');

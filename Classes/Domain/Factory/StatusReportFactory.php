@@ -52,7 +52,7 @@ class StatusReportFactory implements SingletonInterface
             'job' => $job,
             'configurationError' => $configurationError,
             'configurationIsValid' => $configurationIsValid,
-            'configuration' => $configuration
+            'configuration' => $configuration,
         ]);
         return $statusReport;
     }

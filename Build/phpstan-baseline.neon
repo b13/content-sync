@@ -3,4 +3,4 @@ parameters:
 		-
 			message: "#^Call to an undefined method Psr\\\\Http\\\\Message\\\\ServerRequestInterface\\:\\:setControllerExtensionName\\(\\)\\.$#"
 			count: 1
-			path: ../../../Classes/Backend/ToolbarItems/JobStatusToolbarItem.php
+			path: ../Classes/Backend/ToolbarItems/JobStatusToolbarItem.php

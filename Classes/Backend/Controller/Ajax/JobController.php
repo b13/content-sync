@@ -61,17 +61,17 @@ class JobController implements SingletonInterface
                 'flashMessage' => [
                     'title' => 'OK',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-created'),
-                    'severity' => FlashMessage::OK
+                    'severity' => FlashMessage::OK,
                 ],
-                'content' => $view->render()
+                'content' => $view->render(),
             ];
         } catch (Exception $e) {
             $return = [
                 'flashMessage' => [
                     'title' => 'ERROR',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-not-created'),
-                    'severity' => FlashMessage::ERROR
-                ]
+                    'severity' => FlashMessage::ERROR,
+                ],
             ];
         }
 
@@ -93,18 +93,18 @@ class JobController implements SingletonInterface
                 'flashMessage' => [
                     'title' => 'OK',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-killed'),
-                    'severity' => FlashMessage::OK
+                    'severity' => FlashMessage::OK,
                 ],
-                'content' => $view->render()
+                'content' => $view->render(),
             ];
         } catch (Exception $e) {
             $return = [
                 'flashMessage' => [
                     'title' => 'ERROR',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-not-killed'),
-                    'severity' => FlashMessage::ERROR
+                    'severity' => FlashMessage::ERROR,
                 ],
-                'content' => $view->render()
+                'content' => $view->render(),
             ];
         }
 

@@ -1,0 +1,40 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '30 3 * * *'
+
+jobs:
+
+  tests:
+    name: All tests
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        php: [ '8.1']
+        TYPO3: [ '12' ]
+        include:
+          - TYPO3: '11'
+            php: '8.0'
+          - TYPO3: '11'
+            php: '8.1'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install testing system
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s composerUpdate
+
+      - name: Composer validate
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s composerValidate
+
+      - name: Lint PHP
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -s lint
+
+      - name: CGL
+        run: Build/Scripts/runTests.sh -n -p ${{ matrix.php }} -s cgl
+
+      - name: phpstan
+        run: Build/Scripts/runTests.sh -p ${{ matrix.php }} -t ${{ matrix.TYPO3 }} -s phpstan

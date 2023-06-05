@@ -17,13 +17,13 @@ use Zumba\JsonSerializer\JsonSerializer;
 
 class Job
 {
-    const STATUS_WATING = 0;
-    const STATUS_RUNNING = 1;
-    const STATUS_FINISHED = 2;
-    const STATUS_KILLED = 3;
-    const STATUS_FAILED = 4;
+    public const STATUS_WATING = 0;
+    public const STATUS_RUNNING = 1;
+    public const STATUS_FINISHED = 2;
+    public const STATUS_KILLED = 3;
+    public const STATUS_FAILED = 4;
     // can be killed after 10m running
-    const KILLABLE_TIMELIMIT = 600;
+    public const KILLABLE_TIMELIMIT = 600;
 
     protected $status = self::STATUS_WATING;
     protected Configuration $configuration;
@@ -105,7 +105,7 @@ class Job
             'created_time' => $this->createdTime->format('U'),
             'start_time' => $this->startTime->format('U'),
             'end_time' => $this->endTime->format('U'),
-            'error' => $this->error
+            'error' => $this->error,
         ];
     }
 
