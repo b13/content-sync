@@ -1,6 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Psr\\\\Http\\\\Message\\\\ServerRequestInterface\\:\\:setControllerExtensionName\\(\\)\\.$#"
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Database\\\\Connection\\:\\:getSchemaManager\\(\\)\\.$#"
 			count: 1
-			path: ../Classes/Backend/ToolbarItems/JobStatusToolbarItem.php
+			path: ../Classes/Domain/Service/DatabaseParameterBuilder.php

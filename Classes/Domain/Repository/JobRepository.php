@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class JobRepository implements SingletonInterface
 {
-    public const string TABLE = 'tx_contentsync_job';
+    public const TABLE = 'tx_contentsync_job';
 
     protected Connection $databaseConnection;
 

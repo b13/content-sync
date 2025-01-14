@@ -15,7 +15,6 @@ namespace B13\ContentSync\Backend\ToolbarItems;
 use B13\ContentSync\Domain\Factory\StatusReportFactory;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -76,11 +75,6 @@ class JobStatusToolbarItem implements ToolbarItemInterface
         $view->setPartialRootPaths(['EXT:backend/Resources/Private/Partials/ToolbarItems', 'EXT:content_sync/Resources/Private/Partials']);
 
         $templateRootPaths = ['EXT:content_sync/Resources/Private/Templates/ToolbarItems'];
-        // @todo: remove when v11 was dropped
-        if ((new Typo3Version())->getMajorVersion() < 12) {
-            $templateRootPaths = ['EXT:content_sync/Resources/Private/Templates/ToolbarItemsV11'];
-            $view->getRequest()->setControllerExtensionName('ContentSync');
-        }
 
         $view->setTemplateRootPaths($templateRootPaths);
         $view->setTemplate($filename);

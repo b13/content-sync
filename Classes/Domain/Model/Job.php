@@ -17,11 +17,11 @@ use Zumba\JsonSerializer\JsonSerializer;
 
 class Job
 {
-    public const int STATUS_WAITING = 0;
-    public const int STATUS_RUNNING = 1;
-    public const int STATUS_FINISHED = 2;
-    public const int STATUS_KILLED = 3;
-    public const int STATUS_FAILED = 4;
+    public const STATUS_WAITING = 0;
+    public const STATUS_RUNNING = 1;
+    public const STATUS_FINISHED = 2;
+    public const STATUS_KILLED = 3;
+    public const STATUS_FAILED = 4;
     // can be killed after 10m running
     public const KILLABLE_TIMELIMIT = 600;
 

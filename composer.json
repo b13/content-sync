@@ -9,6 +9,7 @@
   "require": {
     "typo3/cms-backend": "^12.4 || ^13.4",
     "typo3/cms-fluid": "^12.4 || ^13.4",
+    "typo3/cms-core": "^12.4 || ^13.4",
     "helhum/typo3-console": "^7.0.0 || ^8.0",
     "zumba/json-serializer": "^3.0",
     "symfony/process": "^6.0 || ^7.0"
@@ -27,7 +28,7 @@
     }
   },
   "require-dev": {
-    "typo3/coding-standards": "^0.7.1",
+    "typo3/coding-standards": "^0.8.0",
     "phpstan/phpstan": "^1.10.16"
   },
   "config": {
