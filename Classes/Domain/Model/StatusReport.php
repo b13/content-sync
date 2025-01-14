@@ -65,7 +65,7 @@ class StatusReport
         return $this->configurationIsValid &&
             (
                 $this->job === null ||
-                !in_array($this->job->getStatus(), [Job::STATUS_WATING, Job::STATUS_RUNNING], true)
+                !in_array($this->job->getStatus(), [Job::STATUS_WAITING, Job::STATUS_RUNNING], true)
             );
     }
 }

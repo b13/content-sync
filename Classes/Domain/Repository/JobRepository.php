@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 
 class JobRepository implements SingletonInterface
 {
-    public const TABLE = 'tx_contentsync_job';
+    public const string TABLE = 'tx_contentsync_job';
 
     protected Connection $databaseConnection;
 
@@ -45,9 +45,9 @@ class JobRepository implements SingletonInterface
             ->from(self::TABLE)
             ->orderBy('created_time', 'DESC')
             ->setMaxResults(1)
-            ->execute()
-            ->fetch();
-        if ($row === false) {
+            ->executeQuery()
+            ->fetchAssociative();
+        if ($row === []) {
             return null;
         }
         return (new Job())->fromDatabaseRow($row);
@@ -61,14 +61,14 @@ class JobRepository implements SingletonInterface
             ->where(
                 $queryBuilder->expr()->eq(
                     'status',
-                    $queryBuilder->createNamedParameter(Job::STATUS_RUNNING, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter(Job::STATUS_RUNNING, Connection::PARAM_INT)
                 )
             )
             ->orderBy('created_time', 'ASC')
             ->setMaxResults(1)
-            ->execute()
-            ->fetch();
-        if ($row === false) {
+            ->executeQuery()
+            ->fetchAllAssociative();
+        if ($row === []) {
             return null;
         }
         return (new Job())->fromDatabaseRow($row);
@@ -82,14 +82,15 @@ class JobRepository implements SingletonInterface
             ->where(
                 $queryBuilder->expr()->eq(
                     'status',
-                    $queryBuilder->createNamedParameter(Job::STATUS_WATING, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter(Job::STATUS_WAITING, Connection::PARAM_INT)
                 )
             )
             ->orderBy('created_time', 'ASC')
             ->setMaxResults(1)
-            ->execute()
-            ->fetch();
-        if ($row === false) {
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        if ($row === []) {
             return null;
         }
         return (new Job())->fromDatabaseRow($row);
@@ -105,17 +106,17 @@ class JobRepository implements SingletonInterface
             ->where(
                 $queryBuilder->expr()->lte(
                     'created_time',
-                    $queryBuilder->createNamedParameter($timeLimit, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($timeLimit, Connection::PARAM_INT)
                 ),
                 $queryBuilder->expr()->in(
                     'status',
-                    $queryBuilder->createNamedParameter([Job::STATUS_WATING, Job::STATUS_RUNNING], Connection::PARAM_INT_ARRAY)
+                    $queryBuilder->createNamedParameter([Job::STATUS_WAITING, Job::STATUS_RUNNING], Connection::PARAM_INT_ARRAY)
                 )
             )
-            ->execute();
+            ->executeQuery();
 
         $jobs = [];
-        while ($row = $res->fetch()) {
+        while ($row = $res->fetchAssociative()) {
             $jobs[] = (new Job())->fromDatabaseRow($row);
         }
         return $jobs;

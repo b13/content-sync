@@ -69,7 +69,7 @@ Options:
             - postgres: use postgres
             - sqlite: use sqlite
 
-    -p <8.0|8.1>
+    -p <8.0|8.1|8.2|8.3>
         Specifies the PHP minor version to be used
             - 8.0 (default): use PHP 8.0
 
@@ -122,13 +122,6 @@ fi
 
 # docker-compose v2 is enabled by docker for mac as experimental feature without
 # asking the user. v2 is currently broken. Detect the version and error out.
-DOCKER_COMPOSE_VERSION=$(docker-compose version --short)
-DOCKER_COMPOSE_MAJOR=$(echo "$DOCKER_COMPOSE_VERSION" | cut -d'.' -f1 | tr -d 'v')
-if [ "$DOCKER_COMPOSE_MAJOR" -gt "1" ]; then
-    echo "docker-compose $DOCKER_COMPOSE_VERSION is currently broken and not supported by runTests.sh."
-    echo "If you are running Docker Desktop for MacOS/Windows disable 'Use Docker Compose V2 release candidate' (Settings > Experimental Features)"
-    exit 1
-fi
 
 # Go to the directory this script is located, so everything else is relative
 # to this dir, no matter from where this script is called.
@@ -149,7 +142,7 @@ fi
 # Option defaults
 TEST_SUITE="unit"
 DBMS="mariadb"
-PHP_VERSION="8.0"
+PHP_VERSION="8.2"
 PHP_XDEBUG_ON=0
 PHP_XDEBUG_PORT=9003
 EXTRA_TEST_OPTIONS=""
@@ -173,7 +166,7 @@ while getopts ":s:d:p:e:t:xy:nhuv" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(8.0|8.1)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(8.0|8.1|8.2|8.3)$ ]]; then
                 INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;

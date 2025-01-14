@@ -27,7 +27,7 @@ class JobStatusToolbarItem implements ToolbarItemInterface
     public function __construct(StatusReportFactory $statusReportFactory, PageRenderer $pageRenderer)
     {
         $this->statusReportFactory = $statusReportFactory;
-        $pageRenderer->loadRequireJsModule('TYPO3/CMS/ContentSync/ContentSync');
+        $pageRenderer->loadJavaScriptModule('@b13/content-sync/content-sync.js');
     }
 
     public function checkAccess(): bool
