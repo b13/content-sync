@@ -2,5 +2,6 @@ public
 composer.lock
 vendor
 .php_cs.cache
+.php-cs-fixer.cache
 /.Build
 /Build/testing-docker/.env

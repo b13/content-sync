@@ -22,8 +22,8 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -61,7 +61,7 @@ class JobController implements SingletonInterface
                 'flashMessage' => [
                     'title' => 'OK',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-created'),
-                    'severity' => FlashMessage::OK,
+                    'severity' => ContextualFeedbackSeverity::OK,
                 ],
                 'content' => $view->render(),
             ];
@@ -70,7 +70,7 @@ class JobController implements SingletonInterface
                 'flashMessage' => [
                     'title' => 'ERROR',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-not-created'),
-                    'severity' => FlashMessage::ERROR,
+                    'severity' => ContextualFeedbackSeverity::ERROR,
                 ],
             ];
         }
@@ -93,7 +93,7 @@ class JobController implements SingletonInterface
                 'flashMessage' => [
                     'title' => 'OK',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-killed'),
-                    'severity' => FlashMessage::OK,
+                    'severity' => ContextualFeedbackSeverity::OK,
                 ],
                 'content' => $view->render(),
             ];
@@ -102,7 +102,7 @@ class JobController implements SingletonInterface
                 'flashMessage' => [
                     'title' => 'ERROR',
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-not-killed'),
-                    'severity' => FlashMessage::ERROR,
+                    'severity' => ContextualFeedbackSeverity::ERROR,
                 ],
                 'content' => $view->render(),
             ];

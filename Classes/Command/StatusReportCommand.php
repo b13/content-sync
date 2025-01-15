@@ -55,7 +55,7 @@ class StatusReportCommand extends Command
                 $statusReport->getJob()->getConfiguration()->getTargetNode()->getConnection() . ')'
             );
             switch ($statusReport->getJob()->getStatus()) {
-                case Job::STATUS_WATING:
+                case Job::STATUS_WAITING:
                     $output->writeln(
                         LocalizationUtility::translate($llPrefix . 'job.created-at') . ': ' .
                         $statusReport->getJob()->getCreatedTime()->format(LocalizationUtility::translate($llPrefix . 'date-format'))

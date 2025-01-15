@@ -16,6 +16,7 @@ use B13\ContentSync\Domain\Model\Configuration;
 use Helhum\Typo3Console\Database\Schema\TableMatcher;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\SingletonInterface;
 
 class DatabaseParameterBuilder implements SingletonInterface
@@ -52,6 +53,10 @@ class DatabaseParameterBuilder implements SingletonInterface
 
     protected function getAllTables(): array
     {
+        if ((new Typo3Version())->getMajorVersion() > 12) {
+            return $this->connection->createSchemaManager()->listTableNames();
+        }
         return $this->connection->getSchemaManager()->listTableNames();
+
     }
 }

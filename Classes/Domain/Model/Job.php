@@ -17,7 +17,7 @@ use Zumba\JsonSerializer\JsonSerializer;
 
 class Job
 {
-    public const STATUS_WATING = 0;
+    public const STATUS_WAITING = 0;
     public const STATUS_RUNNING = 1;
     public const STATUS_FINISHED = 2;
     public const STATUS_KILLED = 3;
@@ -25,7 +25,7 @@ class Job
     // can be killed after 10m running
     public const KILLABLE_TIMELIMIT = 600;
 
-    protected $status = self::STATUS_WATING;
+    protected int $status = self::STATUS_WAITING;
     protected Configuration $configuration;
     protected \DateTime $startTime;
     protected \DateTime $endTime;
@@ -126,7 +126,7 @@ class Job
     {
         return
             $this->status === self::STATUS_RUNNING && $this->getExecutionTime() > self::KILLABLE_TIMELIMIT ||
-            $this->status === self::STATUS_WATING
+            $this->status === self::STATUS_WAITING
         ;
     }
 

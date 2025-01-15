@@ -12,6 +12,4 @@ namespace B13\ContentSync;
  * of the License, or any later version.
  */
 
-class Exception extends \TYPO3\CMS\Core\Exception
-{
-}
+class Exception extends \TYPO3\CMS\Core\Exception {}
