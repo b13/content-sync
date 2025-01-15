@@ -47,7 +47,7 @@ class JobRepository implements SingletonInterface
             ->setMaxResults(1)
             ->executeQuery()
             ->fetchAssociative();
-        if ($row === []) {
+        if ($row === false) {
             return null;
         }
         return (new Job())->fromDatabaseRow($row);
@@ -67,8 +67,8 @@ class JobRepository implements SingletonInterface
             ->orderBy('created_time', 'ASC')
             ->setMaxResults(1)
             ->executeQuery()
-            ->fetchAllAssociative();
-        if ($row === []) {
+            ->fetchAssociative();
+        if ($row === false) {
             return null;
         }
         return (new Job())->fromDatabaseRow($row);
@@ -88,9 +88,9 @@ class JobRepository implements SingletonInterface
             ->orderBy('created_time', 'ASC')
             ->setMaxResults(1)
             ->executeQuery()
-            ->fetchAllAssociative();
+            ->fetchAssociative();
 
-        if ($row === []) {
+        if ($row === false) {
             return null;
         }
         return (new Job())->fromDatabaseRow($row);
