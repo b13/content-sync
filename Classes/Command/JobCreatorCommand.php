@@ -21,29 +21,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
-class JobCreatorCommand extends Command
+final class JobCreatorCommand extends Command
 {
-    protected ExtensionConfiguration $extensionConfiguration;
-    protected ConfigurationValidator $validator;
-    protected JobRepository $jobRepository;
-
     public function __construct(
-        ExtensionConfiguration $extensionConfiguration,
-        ConfigurationValidator $validator,
-        JobRepository $jobRepository,
+        private readonly ExtensionConfiguration $extensionConfiguration,
+        private readonly ConfigurationValidator $validator,
+        private readonly JobRepository $jobRepository,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->extensionConfiguration = $extensionConfiguration;
-        $this->validator = $validator;
-        $this->jobRepository = $jobRepository;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $configuration = (new Configuration())->fromExtensionConfiguration($this->extensionConfiguration->get('content_sync'));

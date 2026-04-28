@@ -15,32 +15,28 @@ namespace B13\ContentSync\Domain\Repository;
 use B13\ContentSync\Domain\Model\Job;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\SingletonInterface;
 
-class JobRepository implements SingletonInterface
+final readonly class JobRepository
 {
-    public const TABLE = 'tx_contentsync_job';
+    private const string TABLE = 'tx_contentsync_job';
 
-    protected Connection $databaseConnection;
-
-    public function __construct(ConnectionPool $connectionPool)
-    {
-        $this->databaseConnection = $connectionPool->getConnectionForTable(self::TABLE);
-    }
+    public function __construct(
+        private ConnectionPool $connectionPool,
+    ) {}
 
     public function add(Job $job): void
     {
-        $this->databaseConnection->insert(self::TABLE, $job->toDatabaseRow());
+        $this->connectionPool->getConnectionForTable(self::TABLE)->insert(self::TABLE, $job->toDatabaseRow());
     }
 
     public function updateJob(Job $job): void
     {
-        $this->databaseConnection->update(self::TABLE, $job->toDatabaseRow(), ['uid' => $job->getUid()]);
+        $this->connectionPool->getConnectionForTable(self::TABLE)->update(self::TABLE, $job->toDatabaseRow(), ['uid' => $job->getUid()]);
     }
 
     public function findOneLast(): ?Job
     {
-        $queryBuilder = $this->databaseConnection->createQueryBuilder();
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $row = $queryBuilder->select('*')
             ->from(self::TABLE)
             ->orderBy('created_time', 'DESC')
@@ -55,7 +51,7 @@ class JobRepository implements SingletonInterface
 
     public function findOneRunning(): ?Job
     {
-        $queryBuilder = $this->databaseConnection->createQueryBuilder();
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $row = $queryBuilder->select('*')
             ->from(self::TABLE)
             ->where(
@@ -76,7 +72,7 @@ class JobRepository implements SingletonInterface
 
     public function findOneWaiting(): ?Job
     {
-        $queryBuilder = $this->databaseConnection->createQueryBuilder();
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $row = $queryBuilder->select('*')
             ->from(self::TABLE)
             ->where(
@@ -89,7 +85,6 @@ class JobRepository implements SingletonInterface
             ->setMaxResults(1)
             ->executeQuery()
             ->fetchAssociative();
-
         if ($row === false) {
             return null;
         }
@@ -98,7 +93,7 @@ class JobRepository implements SingletonInterface
 
     public function findStaleJobs(): array
     {
-        $queryBuilder = $this->databaseConnection->createQueryBuilder();
+        $queryBuilder = $this->connectionPool->getQueryBuilderForTable(self::TABLE);
         $timeLimit = (new \DateTime('-' . Job::KILLABLE_TIMELIMIT . ' seconds'))->getTimestamp();
         $res = $queryBuilder
             ->select('*')
@@ -114,7 +109,6 @@ class JobRepository implements SingletonInterface
                 )
             )
             ->executeQuery();
-
         $jobs = [];
         while ($row = $res->fetchAssociative()) {
             $jobs[] = (new Job())->fromDatabaseRow($row);

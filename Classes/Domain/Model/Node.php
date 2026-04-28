@@ -28,17 +28,11 @@ class Node
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isLocal(): bool
     {
         return $this->local;
     }
 
-    /**
-     * @return string
-     */
     public function getConnection(): string
     {
         if ($this->connection === '' && $this->isLocal()) {
@@ -47,17 +41,11 @@ class Node
         return $this->connection;
     }
 
-    /**
-     * @return string
-     */
     public function getBasePath(): string
     {
         return rtrim($this->basePath, '/') . '/';
     }
 
-    /**
-     * @return string
-     */
     public function getBin(): string
     {
         return $this->bin;

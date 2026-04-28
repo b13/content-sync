@@ -22,27 +22,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunnerCommand extends Command
 {
-    protected ProcessRunner $processRunner;
-    protected JobRepository $jobRepository;
-    protected ConfigurationValidator $validator;
-
     public function __construct(
-        ProcessRunner $processRunner,
-        JobRepository $jobRepository,
-        ConfigurationValidator $validator,
+        private readonly ProcessRunner $processRunner,
+        private readonly JobRepository $jobRepository,
+        private readonly ConfigurationValidator $validator,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->processRunner = $processRunner;
-        $this->jobRepository = $jobRepository;
-        $this->validator = $validator;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $runningJob = $this->jobRepository->findOneRunning();

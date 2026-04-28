@@ -17,32 +17,22 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CollectGarbageCommand extends Command
+final class CollectGarbageCommand extends Command
 {
-    protected JobRepository $jobRepository;
-
     public function __construct(
-        JobRepository $jobRepository,
+        private readonly JobRepository $jobRepository,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->jobRepository = $jobRepository;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $staleJobs = $this->jobRepository->findStaleJobs();
-
         foreach ($staleJobs as $job) {
             $job->fail('job too old');
             $this->jobRepository->updateJob($job);
         }
-
         return 0;
     }
 }

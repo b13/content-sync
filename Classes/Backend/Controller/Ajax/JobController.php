@@ -18,31 +18,25 @@ use B13\ContentSync\Domain\Repository\JobRepository;
 use B13\ContentSync\Domain\Validation\ConfigurationValidator;
 use B13\ContentSync\Exception;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\Response;
-use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
-class JobController implements SingletonInterface
+#[AsController]
+final readonly class JobController
 {
-    protected ExtensionConfiguration $extensionConfiguration;
-    protected ConfigurationValidator $validator;
-    protected JobRepository $jobRepository;
-
     public function __construct(
-        ExtensionConfiguration $extensionConfiguration,
-        ConfigurationValidator $validator,
-        JobRepository $jobRepository
-    ) {
-        $this->extensionConfiguration = $extensionConfiguration;
-        $this->validator = $validator;
-        $this->jobRepository = $jobRepository;
-    }
+        private ViewFactoryInterface $viewFactory,
+        private ExtensionConfiguration $extensionConfiguration,
+        private ConfigurationValidator $validator,
+        private JobRepository $jobRepository,
+    ) {}
 
     public function create(ServerRequestInterface $request): Response
     {
@@ -50,12 +44,17 @@ class JobController implements SingletonInterface
             return (new Response())->withStatus(403);
         }
         $configuration = (new Configuration())->fromExtensionConfiguration($this->extensionConfiguration->get('content_sync'));
-        $view = $this->getFluidTemplateObject('Create');
         try {
             $this->validator->assertValid($configuration);
             $job = new Job();
             $job->setConfiguration($configuration);
             $this->jobRepository->add($job);
+            $viewFactoryData = new ViewFactoryData(
+                templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
+                partialRootPaths: [['EXT:content_sync/Resources/Private/Partials/']],
+                request: $request,
+            );
+            $view = $this->viewFactory->create($viewFactoryData);
             $view->assign('job', $job);
             $return = [
                 'flashMessage' => [
@@ -63,9 +62,9 @@ class JobController implements SingletonInterface
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-created'),
                     'severity' => ContextualFeedbackSeverity::OK,
                 ],
-                'content' => $view->render(),
+                'content' => $view->render('Ajax/Job/Create'),
             ];
-        } catch (Exception $e) {
+        } catch (Exception) {
             $return = [
                 'flashMessage' => [
                     'title' => 'ERROR',
@@ -83,8 +82,13 @@ class JobController implements SingletonInterface
         if (!$this->checkAccess()) {
             return (new Response())->withStatus(403);
         }
-        $view = $this->getFluidTemplateObject('Kill');
         $job = $this->jobRepository->findOneLast();
+        $viewFactoryData = new ViewFactoryData(
+            templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
+            partialRootPaths: [['EXT:content_sync/Resources/Private/Partials/']],
+            request: $request,
+        );
+        $view = $this->viewFactory->create($viewFactoryData);
         $view->assign('job', $job);
         try {
             $job->kill();
@@ -95,7 +99,7 @@ class JobController implements SingletonInterface
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-killed'),
                     'severity' => ContextualFeedbackSeverity::OK,
                 ],
-                'content' => $view->render(),
+                'content' => $view->render('Ajax/Job/Kill'),
             ];
         } catch (Exception $e) {
             $return = [
@@ -104,30 +108,20 @@ class JobController implements SingletonInterface
                     'message' => LocalizationUtility::translate('LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:flashMessage.job-not-killed'),
                     'severity' => ContextualFeedbackSeverity::ERROR,
                 ],
-                'content' => $view->render(),
+                'content' => $view->render('Ajax/Job/Kill'),
             ];
         }
 
         return new JsonResponse($return);
     }
 
-    protected function getFluidTemplateObject(string $filename): StandaloneView
-    {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setPartialRootPaths(['EXT:content_sync/Resources/Private/Partials']);
-        $view->setTemplateRootPaths(['EXT:content_sync/Resources/Private/Templates/Ajax/Job']);
-        $view->setTemplate($filename);
-
-        return $view;
-    }
-
-    protected function getBackendUser(): BackendUserAuthentication
-    {
-        return $GLOBALS['BE_USER'];
-    }
-
-    protected function checkAccess(): bool
+    private function checkAccess(): bool
     {
         return (bool)($this->getBackendUser()->getTSConfig()['options.']['enableContentSync'] ?? $this->getBackendUser()->isAdmin());
+    }
+
+    private function getBackendUser(): BackendUserAuthentication
+    {
+        return $GLOBALS['BE_USER'];
     }
 }

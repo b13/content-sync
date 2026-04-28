@@ -40,9 +40,6 @@ class Job
         $this->endTime = new \DateTime();
     }
 
-    /**
-     * @param string $error
-     */
     public function fail(string $error): void
     {
         $this->error = $error;
@@ -59,25 +56,16 @@ class Job
         $this->endTime = new \DateTime();
     }
 
-    /**
-     * @return int
-     */
     public function getUid(): int
     {
         return $this->uid;
     }
 
-    /**
-     * @return Configuration
-     */
     public function getConfiguration(): Configuration
     {
         return $this->configuration;
     }
 
-    /**
-     * @param Configuration $configuration
-     */
     public function setConfiguration(Configuration $configuration): void
     {
         $this->configuration = $configuration;
@@ -130,9 +118,6 @@ class Job
         ;
     }
 
-    /**
-     * @return int
-     */
     public function getStatus(): int
     {
         return $this->status;
@@ -154,17 +139,11 @@ class Job
         return $this->endTime;
     }
 
-    /**
-     * @return \DateTime
-     */
     public function getCreatedTime(): \DateTime
     {
         return $this->createdTime;
     }
 
-    /**
-     * @return string
-     */
     public function getError(): string
     {
         return $this->error;

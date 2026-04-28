@@ -15,18 +15,12 @@ namespace B13\ContentSync\Domain\Service;
 use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Exception;
 use Symfony\Component\Process\Process;
-use TYPO3\CMS\Core\Information\Typo3Version;
-use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class ProcessRunner implements SingletonInterface
+final readonly class ProcessRunner
 {
-    protected DatabaseParameterBuilder $databaseParameterBuilder;
-
-    public function __construct(DatabaseParameterBuilder $databaseParameterBuilder)
-    {
-        $this->databaseParameterBuilder = $databaseParameterBuilder;
-    }
+    public function __construct(
+        private DatabaseParameterBuilder $databaseParameterBuilder
+    ) {}
 
     public function localToRemote(Configuration $configuration): void
     {
@@ -74,7 +68,7 @@ class ProcessRunner implements SingletonInterface
         }
     }
 
-    protected function exec(string $cmd): void
+    private function exec(string $cmd): void
     {
         $process = Process::fromShellCommandline($cmd);
         $process->run();
@@ -83,11 +77,8 @@ class ProcessRunner implements SingletonInterface
         }
     }
 
-    protected function getFlushPageCacheArguments(): string
+    private function getFlushPageCacheArguments(): string
     {
-        if ((GeneralUtility::makeInstance(Typo3Version::class))->getMajorVersion() === 10) {
-            return 'cache:flushgroups pages';
-        }
         return 'cache:flush --group pages';
     }
 }

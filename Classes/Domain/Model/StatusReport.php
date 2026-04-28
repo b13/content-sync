@@ -28,33 +28,21 @@ class StatusReport
         return $this;
     }
 
-    /**
-     * @return ?Job
-     */
     public function getJob(): ?Job
     {
         return $this->job;
     }
 
-    /**
-     * @return ?Configuration
-     */
     public function getConfiguration(): ?Configuration
     {
         return $this->configuration;
     }
 
-    /**
-     * @return bool
-     */
     public function isConfigurationIsValid(): bool
     {
         return $this->configurationIsValid;
     }
 
-    /**
-     * @return string
-     */
     public function getConfigurationError(): string
     {
         return $this->configurationError;

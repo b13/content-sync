@@ -18,7 +18,6 @@ use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Core\View\ViewFactoryData;
 use TYPO3\CMS\Core\View\ViewFactoryInterface;
-use TYPO3\CMS\Fluid\View\StandaloneView;
 
 final readonly class JobStatusToolbarItem implements ToolbarItemInterface
 {

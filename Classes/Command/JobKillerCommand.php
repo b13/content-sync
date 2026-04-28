@@ -17,23 +17,15 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class JobKillerCommand extends Command
+final class JobKillerCommand extends Command
 {
-    protected JobRepository $jobRepository;
-
     public function __construct(
-        JobRepository $jobRepository,
+        private readonly JobRepository $jobRepository,
         string $name = null
     ) {
         parent::__construct($name);
-        $this->jobRepository = $jobRepository;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $job = $this->jobRepository->findOneLast();
