@@ -14,22 +14,16 @@ namespace B13\ContentSync\Domain\Service;
 
 use B13\ContentSync\Domain\Model\Configuration;
 use Helhum\Typo3Console\Database\Schema\TableMatcher;
-use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\SingletonInterface;
 
-class DatabaseParameterBuilder implements SingletonInterface
+final readonly class DatabaseParameterBuilder implements SingletonInterface
 {
-    private const DATABASE_CONNECTION_NAME = 'Default';
-    protected Connection $connection;
+    public function __construct(
+        private ConnectionPool $connectionPool,
+    ) {}
 
-    public function __construct(ConnectionPool $connectionPool)
-    {
-        $this->connection = $connectionPool->getConnectionByName(self::DATABASE_CONNECTION_NAME);
-    }
-
-    public function buildTablesExclude(Configuration $configuration)
+    public function buildTablesExclude(Configuration $configuration): string
     {
         $excludeTables = [];
         if (!empty($configuration->getDatabaseTables())) {
@@ -46,17 +40,13 @@ class DatabaseParameterBuilder implements SingletonInterface
         return '-e ' . implode(' -e ', $excludeTables);
     }
 
-    protected function getMatchedTables(array $tables): array
+    private function getMatchedTables(array $tables): array
     {
-        return (new TableMatcher())->match($this->connection, ...$tables);
+        return (new TableMatcher())->match($this->connectionPool->getConnectionByName('Default'), ...$tables);
     }
 
-    protected function getAllTables(): array
+    private function getAllTables(): array
     {
-        if ((new Typo3Version())->getMajorVersion() > 12) {
-            return $this->connection->createSchemaManager()->listTableNames();
-        }
-        return $this->connection->getSchemaManager()->listTableNames();
-
+        return $this->connectionPool->getConnectionByName('Default')->createSchemaManager()->listTableNames();
     }
 }

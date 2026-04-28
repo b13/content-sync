@@ -16,16 +16,16 @@ use B13\ContentSync\Domain\Factory\StatusReportFactory;
 use TYPO3\CMS\Backend\Toolbar\ToolbarItemInterface;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Core\View\ViewFactoryData;
+use TYPO3\CMS\Core\View\ViewFactoryInterface;
 
-class JobStatusToolbarItem implements ToolbarItemInterface
+final readonly class JobStatusToolbarItem implements ToolbarItemInterface
 {
-    protected StatusReportFactory $statusReportFactory;
-
-    public function __construct(StatusReportFactory $statusReportFactory, PageRenderer $pageRenderer)
-    {
-        $this->statusReportFactory = $statusReportFactory;
+    public function __construct(
+        private ViewFactoryInterface $viewFactory,
+        private StatusReportFactory $statusReportFactory,
+        PageRenderer $pageRenderer
+    ) {
         $pageRenderer->loadJavaScriptModule('@b13/content-sync/content-sync.js');
     }
 
@@ -36,8 +36,13 @@ class JobStatusToolbarItem implements ToolbarItemInterface
 
     public function getItem(): string
     {
-        $view = $this->getFluidTemplateObject('JobStatusToolbarItem.html');
-        return $view->render();
+        $viewFactoryData = new ViewFactoryData(
+            templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
+            partialRootPaths: ['EXT:backend/Resources/Private/Partials/ToolbarItems', 'EXT:content_sync/Resources/Private/Partials'],
+            layoutRootPaths: ['EXT:backend/Resources/Private/Layouts'],
+        );
+        $view = $this->viewFactory->create($viewFactoryData);
+        return $view->render('ToolbarItems/JobStatusToolbarItem');
     }
     public function hasDropDown(): bool
     {
@@ -46,10 +51,15 @@ class JobStatusToolbarItem implements ToolbarItemInterface
 
     public function getDropDown(): string
     {
-        $view = $this->getFluidTemplateObject('JobStatusToolbarItemDropDown.html');
         $statusReport = $this->statusReportFactory->build();
+        $viewFactoryData = new ViewFactoryData(
+            templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
+            partialRootPaths: ['EXT:backend/Resources/Private/Partials/ToolbarItems', 'EXT:content_sync/Resources/Private/Partials'],
+            layoutRootPaths: ['EXT:backend/Resources/Private/Layouts'],
+        );
+        $view = $this->viewFactory->create($viewFactoryData);
         $view->assign('statusReport', $statusReport);
-        return $view->render();
+        return $view->render('ToolbarItems/JobStatusToolbarItemDropDown');
     }
 
     public function getAdditionalAttributes(): array
@@ -62,27 +72,7 @@ class JobStatusToolbarItem implements ToolbarItemInterface
         return 50;
     }
 
-    /**
-     * Returns a new standalone view, shorthand function
-     *
-     * @param string $filename Which templateFile should be used.
-     * @return StandaloneView
-     */
-    protected function getFluidTemplateObject(string $filename): StandaloneView
-    {
-        $view = GeneralUtility::makeInstance(StandaloneView::class);
-        $view->setLayoutRootPaths(['EXT:backend/Resources/Private/Layouts']);
-        $view->setPartialRootPaths(['EXT:backend/Resources/Private/Partials/ToolbarItems', 'EXT:content_sync/Resources/Private/Partials']);
-
-        $templateRootPaths = ['EXT:content_sync/Resources/Private/Templates/ToolbarItems'];
-
-        $view->setTemplateRootPaths($templateRootPaths);
-        $view->setTemplate($filename);
-
-        return $view;
-    }
-
-    protected function getBackendUser(): BackendUserAuthentication
+    private function getBackendUser(): BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }

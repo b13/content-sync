@@ -27,11 +27,11 @@ In order to see and kickstart a content sync, a new toolbar item on top is shown
 ## Available TYPO3 CLI Commands
 
     content-sync:job:create
-    
+
 creates a new Job from Extension-Configuration
 
     content-sync:runner
-    
+
 runs one waiting job.
 
     content-sync:collect-garbage
@@ -42,9 +42,9 @@ Ensure to have your scheduler set up.
 
 ### Code Analysis
 
-- run `./Build/Scripts/runTests.sh -p 8.1 -s composerUpdate`
-- run `./Build/Scripts/runTests.sh -p 8.1 -t 12 -s phpstan`
-- run `./Build/Scripts/runTests.sh -p 8.1 -t 12 -s cgl`
+- run `./Build/Scripts/runTests.sh -p 8.2 -s composerUpdate`
+- run `./Build/Scripts/runTests.sh -p 8.2 -t 13 -s phpstan`
+- run `./Build/Scripts/runTests.sh -p 8.2 -t 13 -s cgl`
 
 
 ## License

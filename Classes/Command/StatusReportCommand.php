@@ -21,19 +21,13 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
 class StatusReportCommand extends Command
 {
-    protected StatusReportFactory $statusReportFactory;
-
-    public function __construct(StatusReportFactory $statusReportFactory, string $name = null)
-    {
+    public function __construct(
+        private readonly StatusReportFactory $statusReportFactory,
+        string $name = null
+    ) {
         parent::__construct($name);
-        $this->statusReportFactory = $statusReportFactory;
     }
 
-    /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return int
-     */
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $llPrefix = 'LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.';

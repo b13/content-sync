@@ -18,23 +18,14 @@ use B13\ContentSync\Domain\Repository\JobRepository;
 use B13\ContentSync\Domain\Validation\ConfigurationValidator;
 use B13\ContentSync\Exception;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\SingletonInterface;
 
-class StatusReportFactory implements SingletonInterface
+final readonly class StatusReportFactory
 {
-    protected JobRepository $jobRepository;
-    protected ConfigurationValidator $configurationValidator;
-    protected ExtensionConfiguration $extensionConfiguration;
-
     public function __construct(
-        ConfigurationValidator $configurationValidator,
-        ExtensionConfiguration $extensionConfiguration,
-        JobRepository $jobRepository
-    ) {
-        $this->jobRepository = $jobRepository;
-        $this->configurationValidator = $configurationValidator;
-        $this->extensionConfiguration = $extensionConfiguration;
-    }
+        private ConfigurationValidator $configurationValidator,
+        private ExtensionConfiguration $extensionConfiguration,
+        private JobRepository $jobRepository
+    ) {}
 
     public function build(): StatusReport
     {
@@ -48,12 +39,11 @@ class StatusReportFactory implements SingletonInterface
             $configurationIsValid = false;
             $configurationError = $e->getMessage();
         }
-        $statusReport = (new StatusReport())->fromArray([
+        return (new StatusReport())->fromArray([
             'job' => $job,
             'configurationError' => $configurationError,
             'configurationIsValid' => $configurationIsValid,
             'configuration' => $configuration,
         ]);
-        return $statusReport;
     }
 }

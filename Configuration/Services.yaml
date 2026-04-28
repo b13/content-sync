@@ -7,10 +7,6 @@ services:
   B13\ContentSync\:
     resource: '../Classes/*'
 
-  B13\ContentSync\Backend\ToolbarItems\JobStatusToolbarItem:
-    public: true
-    tags: ['backend.toolbar.item']
-
   B13\ContentSync\Command\StatusReportCommand:
     tags:
       - name: 'console.command'

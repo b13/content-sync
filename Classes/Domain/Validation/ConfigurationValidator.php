@@ -16,9 +16,8 @@ use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Domain\Model\Node;
 use B13\ContentSync\Exception;
 use Symfony\Component\Process\Process;
-use TYPO3\CMS\Core\SingletonInterface;
 
-class ConfigurationValidator implements SingletonInterface
+final readonly class ConfigurationValidator
 {
     public function assertMayRun(Configuration $configuration): void
     {
