@@ -58,7 +58,7 @@ Options:
             - phpstan: phpstan analyze
             - unit (default): PHP unit tests
 
-    -t <10|11>
+    -t <13|14>
         Only with -s composerUpdate|acceptance|functional
         TYPO3 core major version the extension is embedded in for testing.
 
@@ -69,9 +69,9 @@ Options:
             - postgres: use postgres
             - sqlite: use sqlite
 
-    -p <8.0|8.1|8.2|8.3>
+    -p <8.2|8.3|8.4|8.5>
         Specifies the PHP minor version to be used
-            - 8.0 (default): use PHP 8.0
+            - 8.2 (default): use PHP 8.2
 
     -e "<phpunit or codeception options>"
         Only with -s acceptance|functional|unit
@@ -107,11 +107,11 @@ Options:
         Show this help.
 
 Examples:
-    # Run unit tests using PHP 8.0
+    # Run unit tests using PHP 8.2
     ./Build/Scripts/runTests.sh
 
     # Run unit tests using PHP 8.0
-    ./Build/Scripts/runTests.sh -p 8.0
+    ./Build/Scripts/runTests.sh -p 8.2
 EOF
 
 # Go to the directory this script is located, so everything else is relative
@@ -139,7 +139,7 @@ PHP_XDEBUG_PORT=9003
 EXTRA_TEST_OPTIONS=""
 SCRIPT_VERBOSE=0
 CGLCHECK_DRY_RUN=""
-TYPO3="10"
+TYPO3="13"
 
 # Option parsing
 # Reset in case getopts has been used previously in the shell
@@ -157,7 +157,7 @@ while getopts ":s:d:p:e:t:xy:nhuv" OPT; do
             ;;
         p)
             PHP_VERSION=${OPTARG}
-            if ! [[ ${PHP_VERSION} =~ ^(8.0|8.1|8.2|8.3)$ ]]; then
+            if ! [[ ${PHP_VERSION} =~ ^(8.2|8.3|8.4|8.5)$ ]]; then
                 INVALID_OPTIONS+=("${OPTARG}")
             fi
             ;;
