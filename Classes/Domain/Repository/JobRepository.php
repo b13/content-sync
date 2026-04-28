@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 
 final readonly class JobRepository
 {
-    private const string TABLE = 'tx_contentsync_job';
+    private const TABLE = 'tx_contentsync_job';
 
     public function __construct(
         private ConnectionPool $connectionPool,
