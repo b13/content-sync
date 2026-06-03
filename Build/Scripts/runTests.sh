@@ -49,42 +49,19 @@ No arguments: Run all unit tests with PHP 8.0
 Options:
     -s <...>
         Specifies which test suite to run
-            - acceptance: backend acceptance tests
             - cgl: cgl test and fix all php files
             - composerUpdate: "composer update", handy if host has no PHP
             - composerValidate: "composer validate"
-            - functional: functional tests
             - lint: PHP linting
             - phpstan: phpstan analyze
-            - unit (default): PHP unit tests
 
     -t <13|14>
         Only with -s composerUpdate|acceptance|functional
         TYPO3 core major version the extension is embedded in for testing.
 
-    -d <mariadb|postgres|sqlite>
-        Only with -s functional
-        Specifies on which DBMS tests are performed
-            - mariadb (default): use mariadb
-            - postgres: use postgres
-            - sqlite: use sqlite
-
     -p <8.2|8.3|8.4|8.5>
         Specifies the PHP minor version to be used
             - 8.2 (default): use PHP 8.2
-
-    -e "<phpunit or codeception options>"
-        Only with -s acceptance|functional|unit
-        Additional options to send to phpunit (unit & functional tests) or codeception (acceptance
-        tests). For phpunit, options starting with "--" must be added after options starting with "-".
-        Example -e "-v --filter canRetrieveValueWithGP" to enable verbose output AND filter tests
-        named "canRetrieveValueWithGP"
-
-    -x
-        Only with -s functional|unit|acceptance
-        Send information to host instance for test or system under test break points. This is especially
-        useful if a local PhpStorm instance is listening on default xdebug port 9003. A different port
-        can be selected with -y
 
     -y <port>
         Send xdebug information to a different port than default 9003 if an IDE like PhpStorm
@@ -207,7 +184,7 @@ if [ ${#INVALID_OPTIONS[@]} -ne 0 ]; then
 fi
 
 # Move "7.4" to "php74", the latter is the docker container name
-DOCKER_PHP_IMAGE=$(echo "php${PHP_VERSION}" | sed -e 's/\.//')
+DOCKER_PHP_IMAGE="ghcr.io/typo3/core-testing-$(echo "php${PHP_VERSION}" | sed -e 's/\.//'):latest"
 
 # Set $1 to first mass argument, this is the optional test file or test directory to execute
 shift $((OPTIND - 1))
@@ -222,12 +199,6 @@ fi
 
 # Suite execution
 case ${TEST_SUITE} in
-    acceptance)
-        setUpDockerComposeDotEnv
-        docker compose run acceptance_backend_mariadb10
-        SUITE_EXIT_CODE=$?
-        docker compose down
-        ;;
     cgl)
         # Active dry-run for cgl needs not "-n" but specific options
         if [ -n "${CGLCHECK_DRY_RUN}" ]; then
@@ -248,30 +219,6 @@ case ${TEST_SUITE} in
         setUpDockerComposeDotEnv
         docker compose run composer_validate
         SUITE_EXIT_CODE=$?
-        docker compose down
-        ;;
-    functional)
-        setUpDockerComposeDotEnv
-        case ${DBMS} in
-            mariadb)
-                docker compose run functional_mariadb10
-                SUITE_EXIT_CODE=$?
-                ;;
-            postgres)
-                docker compose run functional_postgres10
-                SUITE_EXIT_CODE=$?
-                ;;
-            sqlite)
-                mkdir -p ${CORE_ROOT}/.Build/Web/typo3temp/var/tests/functional-sqlite-dbs/
-                docker compose run functional_sqlite
-                SUITE_EXIT_CODE=$?
-                ;;
-            *)
-                echo "Invalid -d option argument ${DBMS}" >&2
-                echo >&2
-                echo "${HELP}" >&2
-                exit 1
-        esac
         docker compose down
         ;;
     lint)
