@@ -16,6 +16,7 @@ use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Domain\Model\Job;
 use B13\ContentSync\Domain\Repository\JobRepository;
 use B13\ContentSync\Domain\Validation\ConfigurationValidator;
+use B13\ContentSync\Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,7 +41,12 @@ final class JobCreatorCommand extends Command
         $this->validator->assertValid($configuration);
         $job = new Job();
         $job->setConfiguration($configuration);
-        $this->jobRepository->add($job);
+        try {
+            $this->jobRepository->add($job);
+        } catch (Exception $e) {
+            $output->writeln($e->getMessage());
+            return Command::FAILURE;
+        }
         return 0;
     }
 }

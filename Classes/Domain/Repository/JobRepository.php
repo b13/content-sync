@@ -13,6 +13,7 @@ namespace B13\ContentSync\Domain\Repository;
  */
 
 use B13\ContentSync\Domain\Model\Job;
+use B13\ContentSync\Exception;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 
@@ -26,6 +27,14 @@ final readonly class JobRepository
 
     public function add(Job $job): void
     {
+        $waitingJob = $this->findOneWaiting();
+        if ($waitingJob !== null) {
+            throw new Exception('there is already a waiting job', 1780465898);
+        }
+        $runningJob = $this->findOneRunning();
+        if ($runningJob !== null) {
+            throw new Exception('there is already a running job', 1780465899);
+        }
         $this->connectionPool->getConnectionForTable(self::TABLE)->insert(self::TABLE, $job->toDatabaseRow());
     }
 
