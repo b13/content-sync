@@ -14,12 +14,14 @@ namespace B13\ContentSync\Domain\Service;
 
 use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\Process;
 
 final readonly class ProcessRunner
 {
     public function __construct(
-        private DatabaseParameterBuilder $databaseParameterBuilder
+        private DatabaseParameterBuilder $databaseParameterBuilder,
+        private LoggerInterface $logger
     ) {}
 
     public function localToRemote(Configuration $configuration): void
@@ -70,6 +72,7 @@ final readonly class ProcessRunner
 
     private function exec(string $cmd): void
     {
+        $this->logger->debug($cmd);
         $process = Process::fromShellCommandline($cmd);
         $process->run();
         if (!$process->isSuccessful()) {
