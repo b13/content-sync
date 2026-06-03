@@ -1,7 +1,7 @@
 {
   "name": "b13/content-sync",
   "type": "typo3-cms-extension",
-  "description": "Sync Database Tables and Files between two TYPO3 Installations",
+  "description": "Content Sync - Sync Database Tables and Files between two TYPO3 Installations",
   "homepage": "https://b13.com",
   "license": [
     "GPL-2.0-or-later"
@@ -16,7 +16,11 @@
   },
   "extra": {
     "typo3/cms": {
-      "extension-key": "content_sync"
+      "extension-key": "content_sync",
+      "version": "4.0.0",
+      "Package": {
+        "providesPackages": {}
+      }
     }
   },
   "replace": {
