@@ -13,7 +13,9 @@ namespace B13\ContentSync\Domain\Service;
  */
 
 use B13\ContentSync\Domain\Model\Configuration;
+use B13\ContentSync\Event\BeforeProcessRunnerExecutesCommandsEvent;
 use B13\ContentSync\Exception;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Process\Process;
 
@@ -21,7 +23,8 @@ final readonly class ProcessRunner
 {
     public function __construct(
         private DatabaseParameterBuilder $databaseParameterBuilder,
-        private LoggerInterface $logger
+        private LoggerInterface $logger,
+        private EventDispatcherInterface $eventDispatcher
     ) {}
 
     public function localToRemote(Configuration $configuration): void
@@ -42,8 +45,11 @@ final readonly class ProcessRunner
             $file = rtrim($file, '/');
             $commands[] = 'rsync -a --delete --omit-dir-times --no-owner --no-group ' . $localNode->getBasePath() . $file . '/ ' . $remoteNode->getConnection() . ':' . $remoteNode->getBasePath() . $file;
         }
+        $beforeProcessRunnnerExecuteCommands = new BeforeProcessRunnerExecutesCommandsEvent($configuration, $commands);
+        $this->eventDispatcher->dispatch($beforeProcessRunnnerExecuteCommands);
+        $commands = $beforeProcessRunnnerExecuteCommands->commands;
         foreach ($commands as $command) {
-            $this->exec($command);
+            $this->exec($command, $beforeProcessRunnnerExecuteCommands->timeoutPerProcess);
         }
     }
 
@@ -65,15 +71,18 @@ final readonly class ProcessRunner
             $file = rtrim($file, '/');
             $commands[] = 'rsync -a --delete --omit-dir-times --no-owner --no-group ' . $remoteNode->getConnection() . ':' . $remoteNode->getBasePath() . $file . '/ ' . $localNode->getBasePath() . $file;
         }
+        $beforeProcessRunnnerExecuteCommands = new BeforeProcessRunnerExecutesCommandsEvent($configuration, $commands);
+        $this->eventDispatcher->dispatch($beforeProcessRunnnerExecuteCommands);
+        $commands = $beforeProcessRunnnerExecuteCommands->commands;
         foreach ($commands as $command) {
-            $this->exec($command);
+            $this->exec($command, $beforeProcessRunnnerExecuteCommands->timeoutPerProcess);
         }
     }
 
-    private function exec(string $cmd): void
+    private function exec(string $cmd, int $timeout): void
     {
         $this->logger->debug($cmd);
-        $process = Process::fromShellCommandline($cmd);
+        $process = Process::fromShellCommandline(command: $cmd, timeout: $timeout);
         $process->run();
         if (!$process->isSuccessful()) {
             throw new Exception('cannot exec command ' . $cmd . ' with error ' . $process->getErrorOutput(), 1600757440);
