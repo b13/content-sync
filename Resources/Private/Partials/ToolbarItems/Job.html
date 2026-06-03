@@ -1,4 +1,4 @@
-<html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
 <f:if condition="{job}">
     <f:then>
         <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job-status"/>:
@@ -37,6 +37,7 @@
                 {job.error}
             </small>
         </f:if>
+
         <f:if condition="{job.killable}">
             <br><br>
             <form method="post" class="t3js-content-sync-kill">

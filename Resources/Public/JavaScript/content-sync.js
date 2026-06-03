@@ -45,6 +45,22 @@ ContentSync.init = function() {
     ev.preventDefault();
     ContentSync.ajaxCall(TYPO3.settings.ajaxUrls['content-sync_create']);
   });
+  $(document).on('click', '#b13-contentsync-backend-toolbaritems-jobstatustoolbaritem .t3js-content-sync-reload', function(ev) {
+    $('#b13-contentsync-backend-toolbaritems-jobstatustoolbaritem .t3js-content-sync-toolbar-icon').hide();
+    $('#b13-contentsync-backend-toolbaritems-jobstatustoolbaritem .t3js-content-sync-toolbar-spinner').show();
+    ev.preventDefault();
+    $.ajax({
+      type: 'GET',
+      url: TYPO3.settings.ajaxUrls['content-sync_reload'],
+      success: function (response) {
+        if (response.content) {
+           $('.t3js-content-sync-current-job').html(response.content);
+        }
+        $('#b13-contentsync-backend-toolbaritems-jobstatustoolbaritem .t3js-content-sync-toolbar-spinner').hide();
+        $('#b13-contentsync-backend-toolbaritems-jobstatustoolbaritem .t3js-content-sync-toolbar-icon').show();
+      }
+    });
+  });
 };
 
 $(document).ready(function() {

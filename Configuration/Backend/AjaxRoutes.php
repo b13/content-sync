@@ -14,6 +14,10 @@ return [
         'path' => '/ContentSync/job/kill',
         'target' => B13\ContentSync\Backend\Controller\Ajax\JobController::class . '::kill',
     ],
+    'content-sync_reload' => [
+        'path' => '/ContentSync/job/reload',
+        'target' => B13\ContentSync\Backend\Controller\Ajax\JobController::class . '::reload',
+    ],
     'content-sync_collect-garbage' => [
         'path' => '/ContentSync/collectGarbage',
         'target' => B13\ContentSync\Backend\Controller\Ajax\JobController::class . '::collectGarbage',

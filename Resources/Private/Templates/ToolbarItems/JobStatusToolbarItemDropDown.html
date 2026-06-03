@@ -1,6 +1,9 @@
-<html xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:core="http://typo3.org/ns/TYPO3/CMS/Core/ViewHelpers" data-namespace-typo3-fluid="true">
 <h3 class="dropdown-headline">
-    <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.headline" />
+  <f:translate key="LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.headline" />
+  <a href="#" class="t3js-content-sync-reload" title="{f:translate(key: 'LLL:EXT:content_sync/Resources/Private/Language/locallang.xlf:statusReport.job.reload')}">
+    <core:icon identifier="actions-system-refresh" size="small" />
+  </a>
 </h3>
 <div class="">
     <div class="dropdown-item-columns dropdown-item-text">

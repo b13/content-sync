@@ -12,6 +12,7 @@ namespace B13\ContentSync\Backend\Controller\Ajax;
  * of the License, or any later version.
  */
 
+use B13\ContentSync\Domain\Factory\StatusReportFactory;
 use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Domain\Model\Job;
 use B13\ContentSync\Domain\Repository\JobRepository;
@@ -37,6 +38,7 @@ final readonly class JobController
         private ExtensionConfiguration $extensionConfiguration,
         private ConfigurationValidator $validator,
         private JobRepository $jobRepository,
+        private StatusReportFactory $statusReportFactory,
     ) {}
 
     public function create(ServerRequestInterface $request): ResponseInterface
@@ -75,6 +77,22 @@ final readonly class JobController
             ];
         }
 
+        return new JsonResponse($return);
+    }
+
+    public function reload(ServerRequestInterface $request): ResponseInterface
+    {
+        $statusReport = $this->statusReportFactory->build();
+        $viewFactoryData = new ViewFactoryData(
+            templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
+            partialRootPaths: ['EXT:content_sync/Resources/Private/Partials/'],
+            request: $request,
+        );
+        $view = $this->viewFactory->create($viewFactoryData);
+        $view->assign('statusReport', $statusReport);
+        $return = [
+            'content' => $view->render('Ajax/Job/Reload'),
+        ];
         return new JsonResponse($return);
     }
 
