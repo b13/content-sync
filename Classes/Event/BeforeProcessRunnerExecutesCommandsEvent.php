@@ -18,7 +18,7 @@ final class BeforeProcessRunnerExecutesCommandsEvent
 {
     public int $timeoutPerProcess = 60;
 
-    public function  __construct(
+    public function __construct(
         public readonly Configuration $configuration,
         public array $commands
     ) {}

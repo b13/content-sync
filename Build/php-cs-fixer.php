@@ -1,6 +1,11 @@
 <?php
 
 $config = \TYPO3\CodingStandards\CsFixerConfig::create();
-$config->getFinder()->in(['Classes', 'Configuration']);
-$config->getFinder()->exclude(['var', 'public']);
+$config->getFinder()->exclude(['var', 'public', 'Build'])->in(__DIR__ . '/..');
+$config->addRules([
+    'nullable_type_declaration' => [
+        'syntax' => 'question_mark',
+    ],
+    'nullable_type_declaration_for_default_null_value' => true,
+]);
 return $config;

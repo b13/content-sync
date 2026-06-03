@@ -90,7 +90,7 @@ class Job
             'json_configuration' => $json,
             'created_time' => $this->createdTime->format('U'),
             'start_time' => $this->startTime ? $this->startTime->format('U') : 0,
-            'end_time' => $this->endTime ? $this->endTime->format('U'): 0,
+            'end_time' => $this->endTime ? $this->endTime->format('U') : 0,
             'error' => $this->error,
         ];
     }

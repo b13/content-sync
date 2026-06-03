@@ -1,6 +1,7 @@
 public
 composer.lock
 vendor
+var
 .php_cs.cache
 .php-cs-fixer.cache
 /.Build

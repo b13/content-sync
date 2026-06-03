@@ -23,7 +23,7 @@ final class CollectGarbageCommand extends Command
 {
     public function __construct(
         private readonly JobRepository $jobRepository,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }

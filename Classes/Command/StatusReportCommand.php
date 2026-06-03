@@ -25,7 +25,7 @@ class StatusReportCommand extends Command
 {
     public function __construct(
         private readonly StatusReportFactory $statusReportFactory,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }

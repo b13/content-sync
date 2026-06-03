@@ -28,7 +28,7 @@ class RunnerCommand extends Command
         private readonly ProcessRunner $processRunner,
         private readonly JobRepository $jobRepository,
         private readonly ConfigurationValidator $validator,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }

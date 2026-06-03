@@ -30,7 +30,7 @@ final class JobCreatorCommand extends Command
         private readonly ExtensionConfiguration $extensionConfiguration,
         private readonly ConfigurationValidator $validator,
         private readonly JobRepository $jobRepository,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
     }
