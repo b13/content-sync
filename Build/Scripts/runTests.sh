@@ -116,7 +116,7 @@ PHP_XDEBUG_PORT=9003
 EXTRA_TEST_OPTIONS=""
 SCRIPT_VERBOSE=0
 CGLCHECK_DRY_RUN=""
-TYPO3="13"
+TYPO3="14"
 
 # Option parsing
 # Reset in case getopts has been used previously in the shell
@@ -209,9 +209,9 @@ case ${TEST_SUITE} in
         SUITE_EXIT_CODE=$?
         docker compose down
         ;;
-    composerUpdate)
+    composerInstall)
         setUpDockerComposeDotEnv
-        docker compose run composer_update
+        docker compose run composer_install
         SUITE_EXIT_CODE=$?
         docker compose down
         ;;
