@@ -6,4 +6,7 @@ services:
 
   B13\ContentSync\:
     resource: '../Classes/*'
-    exclude: '../Classes/Domain/Model/*'
+    exclude:
+      - '../Classes/Domain/Model/*'
+      - '../Classes/Event/*'
+      - '../Classes/Exception.php'
