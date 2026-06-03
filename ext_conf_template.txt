@@ -11,7 +11,7 @@ sourceNode {
     local = 1
     # cat=sourceNode; type=string; label=Connection for Remote Node (<user>@<host>)
     connection =
-    # cat=sourceNode; type=string; label=Full Path to TYPO3 console bin (e.g. /var/www/html/bin/typo3cms)
+    # cat=sourceNode; type=string; label=Full Path to TYPO3 console bin (e.g. /var/www/html/bin/typo3)
     bin =
     # cat=sourceNode; type=string; label=Base Path for sync
     basePath =
@@ -21,7 +21,7 @@ targetNode {
     local = 0
     # cat=targetNode; type=string; label=Connection for Remote Node (<user>@<host>)
     connection =
-    # cat=targetNode; type=string; label=Full Path to TYPO3 console bin (e.g. /var/www/html/bin/typo3cms)
+    # cat=targetNode; type=string; label=Full Path to TYPO3 console bin (e.g. /var/www/html/bin/typo3)
     bin =
     # cat=targetNode; type=string; label=Base Path for sync
     basePath =

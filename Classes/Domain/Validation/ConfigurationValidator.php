@@ -37,7 +37,7 @@ final readonly class ConfigurationValidator
         $process = Process::fromShellCommandline('ssh -o BatchMode=yes -o ConnectTimeout=5 ' . $remoteNode->getConnection() . ' ls ' . $remoteNode->getBin());
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new Exception('typo3cms bin not found at remote node', 1600765841);
+            throw new Exception('typo3 bin not found at remote node', 1600765841);
         }
         // remote basePath exists
         $process = Process::fromShellCommandline('ssh -o BatchMode=yes -o ConnectTimeout=5 ' . $remoteNode->getConnection() . ' ls -d ' . $remoteNode->getBasePath());
@@ -69,7 +69,7 @@ final readonly class ConfigurationValidator
         $process = Process::fromShellCommandline('ls ' . $localNode->getBin());
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new Exception('typo3cms bin not found at local node', 1600765843);
+            throw new Exception('typo3 bin not found at local node', 1600765843);
         }
         // remote basePath exists
         $process = Process::fromShellCommandline('ls -d ' . $localNode->getBasePath());
