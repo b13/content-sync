@@ -52,7 +52,7 @@ final readonly class JobController
             $this->jobRepository->add($job);
             $viewFactoryData = new ViewFactoryData(
                 templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
-                partialRootPaths: [['EXT:content_sync/Resources/Private/Partials/']],
+                partialRootPaths: ['EXT:content_sync/Resources/Private/Partials/'],
                 request: $request,
             );
             $view = $this->viewFactory->create($viewFactoryData);
@@ -86,7 +86,7 @@ final readonly class JobController
         $job = $this->jobRepository->findOneLast();
         $viewFactoryData = new ViewFactoryData(
             templateRootPaths: ['EXT:content_sync/Resources/Private/Templates/'],
-            partialRootPaths: [['EXT:content_sync/Resources/Private/Partials/']],
+            partialRootPaths: ['EXT:content_sync/Resources/Private/Partials/'],
             request: $request,
         );
         $view = $this->viewFactory->create($viewFactoryData);
