@@ -7,5 +7,6 @@ $config->addRules([
         'syntax' => 'question_mark',
     ],
     'nullable_type_declaration_for_default_null_value' => true,
+    'declare_strict_types' => true,
 ]);
 return $config;

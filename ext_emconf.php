@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Content Sync',
     'description' => 'Sync Database Tables and Files between two TYPO3 Installations',

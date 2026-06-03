@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Definitions for routes provided by EXT:content_sync
  */
