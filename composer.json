@@ -17,7 +17,7 @@
   "extra": {
     "typo3/cms": {
       "extension-key": "content_sync",
-      "version": "4.0.0",
+      "version": "3.1.0",
       "Package": {
         "providesPackages": {}
       }
