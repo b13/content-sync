@@ -6,29 +6,4 @@ services:
 
   B13\ContentSync\:
     resource: '../Classes/*'
-
-  B13\ContentSync\Command\StatusReportCommand:
-    tags:
-      - name: 'console.command'
-        command: 'content-sync:status-report'
-        schedulable: true
-  B13\ContentSync\Command\RunnerCommand:
-    tags:
-      - name: 'console.command'
-        command: 'content-sync:runner'
-        schedulable: true
-  B13\ContentSync\Command\JobCreatorCommand:
-    tags:
-      - name: 'console.command'
-        command: 'content-sync:job:create'
-        schedulable: true
-  B13\ContentSync\Command\JobKillerCommand:
-    tags:
-      - name: 'console.command'
-        command: 'content-sync:job:kill'
-        schedulable: true
-  B13\ContentSync\Command\CollectGarbageCommand:
-    tags:
-      - name: 'console.command'
-        command: 'content-sync:collect-garbage'
-        schedulable: true
+    exclude: '../Classes/Domain/Model/*'

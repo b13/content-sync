@@ -14,11 +14,13 @@ namespace B13\ContentSync\Command;
 
 use B13\ContentSync\Domain\Factory\StatusReportFactory;
 use B13\ContentSync\Domain\Model\Job;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 
+#[AsCommand(name: 'content-sync:status-report')]
 class StatusReportCommand extends Command
 {
     public function __construct(

@@ -16,11 +16,13 @@ use B13\ContentSync\Domain\Model\Configuration;
 use B13\ContentSync\Domain\Model\Job;
 use B13\ContentSync\Domain\Repository\JobRepository;
 use B13\ContentSync\Domain\Validation\ConfigurationValidator;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
+#[AsCommand(name: 'content-sync:job:create')]
 final class JobCreatorCommand extends Command
 {
     public function __construct(

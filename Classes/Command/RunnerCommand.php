@@ -16,10 +16,12 @@ use B13\ContentSync\Domain\Repository\JobRepository;
 use B13\ContentSync\Domain\Service\ProcessRunner;
 use B13\ContentSync\Domain\Validation\ConfigurationValidator;
 use B13\ContentSync\Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(name: 'content-sync:runner')]
 class RunnerCommand extends Command
 {
     public function __construct(
