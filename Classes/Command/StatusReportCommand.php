@@ -89,6 +89,6 @@ class StatusReportCommand extends Command
         } else {
             $output->writeln(LocalizationUtility::translate($llPrefix . 'no-jobs'));
         }
-        return 0;
+        return Command::SUCCESS;
     }
 }

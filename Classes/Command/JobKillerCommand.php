@@ -32,10 +32,10 @@ final class JobKillerCommand extends Command
     {
         $job = $this->jobRepository->findOneLast();
         if ($job === null) {
-            return 0;
+            return Command::SUCCESS;
         }
         $job->kill();
         $this->jobRepository->updateJob($job);
-        return 0;
+        return Command::SUCCESS;
     }
 }

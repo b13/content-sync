@@ -37,11 +37,11 @@ class RunnerCommand extends Command
     {
         $runningJob = $this->jobRepository->findOneRunning();
         if ($runningJob !== null) {
-            return 0;
+            return Command::SUCCESS;
         }
         $job = $this->jobRepository->findOneWaiting();
         if ($job === null) {
-            return 0;
+            return Command::SUCCESS;
         }
         $job->start();
         $this->jobRepository->updateJob($job);
@@ -57,11 +57,11 @@ class RunnerCommand extends Command
             // @extensionScannerIgnoreLine
             $job->finish();
             $this->jobRepository->updateJob($job);
-            return 0;
+            return Command::SUCCESS;
         } catch (Exception $e) {
             $job->fail($e->getCode() . ' - ' . $e->getMessage());
             $this->jobRepository->updateJob($job);
-            return 1;
+            return Command::FAILURE;
         }
     }
 }

@@ -35,6 +35,6 @@ final class CollectGarbageCommand extends Command
             $job->fail('job too old');
             $this->jobRepository->updateJob($job);
         }
-        return 0;
+        return Command::SUCCESS;
     }
 }

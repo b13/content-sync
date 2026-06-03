@@ -47,6 +47,6 @@ final class JobCreatorCommand extends Command
             $output->writeln($e->getMessage());
             return Command::FAILURE;
         }
-        return 0;
+        return Command::SUCCESS;
     }
 }
