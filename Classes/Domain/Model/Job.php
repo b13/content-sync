@@ -27,8 +27,8 @@ class Job
 
     protected int $status = self::STATUS_WAITING;
     protected Configuration $configuration;
-    protected \DateTime $startTime;
-    protected \DateTime $endTime;
+    protected ?\DateTime $startTime = null;
+    protected ?\DateTime $endTime = null;
     protected \DateTime $createdTime;
     protected string $error = '';
     protected int $uid;
@@ -36,8 +36,6 @@ class Job
     public function __construct()
     {
         $this->createdTime = new \DateTime();
-        $this->startTime = new \DateTime();
-        $this->endTime = new \DateTime();
     }
 
     public function fail(string $error): void
@@ -91,8 +89,8 @@ class Job
             'status' => $this->status,
             'json_configuration' => $json,
             'created_time' => $this->createdTime->format('U'),
-            'start_time' => $this->startTime->format('U'),
-            'end_time' => $this->endTime->format('U'),
+            'start_time' => $this->startTime ? $this->startTime->format('U') : 0,
+            'end_time' => $this->endTime ? $this->endTime->format('U'): 0,
             'error' => $this->error,
         ];
     }
