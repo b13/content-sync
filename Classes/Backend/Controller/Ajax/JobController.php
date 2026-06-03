@@ -17,6 +17,7 @@ use B13\ContentSync\Domain\Model\Job;
 use B13\ContentSync\Domain\Repository\JobRepository;
 use B13\ContentSync\Domain\Validation\ConfigurationValidator;
 use B13\ContentSync\Exception;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Backend\Attribute\AsController;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
@@ -38,7 +39,7 @@ final readonly class JobController
         private JobRepository $jobRepository,
     ) {}
 
-    public function create(ServerRequestInterface $request): Response
+    public function create(ServerRequestInterface $request): ResponseInterface
     {
         if (!$this->checkAccess()) {
             return (new Response())->withStatus(403);
@@ -77,7 +78,7 @@ final readonly class JobController
         return new JsonResponse($return);
     }
 
-    public function kill(ServerRequestInterface $request): Response
+    public function kill(ServerRequestInterface $request): ResponseInterface
     {
         if (!$this->checkAccess()) {
             return (new Response())->withStatus(403);
