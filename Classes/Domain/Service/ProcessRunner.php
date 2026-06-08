@@ -17,6 +17,7 @@ use B13\ContentSync\Event\BeforeProcessRunnerExecutesCommandsEvent;
 use B13\ContentSync\Exception;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Process\Exception\RuntimeException;
 use Symfony\Component\Process\Process;
 
 final readonly class ProcessRunner
@@ -83,7 +84,11 @@ final readonly class ProcessRunner
     {
         $this->logger->debug($cmd);
         $process = Process::fromShellCommandline(command: $cmd, timeout: $timeout);
-        $process->run();
+        try {
+            $process->run();
+        } catch (RuntimeException $e) {
+            throw new Exception('process runtime exception: ' . $e->getMessage() . ' - ' . $e->getCode(), 1780919317);
+        }
         if (!$process->isSuccessful()) {
             throw new Exception('cannot exec command ' . $cmd . ' with error ' . $process->getErrorOutput(), 1600757440);
         }
